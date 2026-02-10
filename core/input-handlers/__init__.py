@@ -1,10 +1,11 @@
 """Querty-OS Input Handlers Package"""
+
 from .input_handlers import (
-    InputHandler,
-    VoiceInputHandler,
-    TextInputHandler,
     CameraInputHandler,
-    InputManager
+    InputHandler,
+    InputManager,
+    TextInputHandler,
+    VoiceInputHandler,
 )
 
 __version__ = "0.1.0"
@@ -13,5 +14,5 @@ __all__ = [
     "VoiceInputHandler",
     "TextInputHandler",
     "CameraInputHandler",
-    "InputManager"
+    "InputManager",
 ]
