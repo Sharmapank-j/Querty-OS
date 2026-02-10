@@ -120,9 +120,78 @@ Querty-OS is designed with privacy as a core principle:
 
 See [LICENSE](LICENSE) for details.
 
+## Priority System
+
+**AI > Android > Linux > Windows**
+
+Querty-OS enforces a strict resource allocation priority:
+
+- **AI (Highest)**: 40% default allocation - LLM models, cache, embeddings
+- **Android**: 35% allocation - Native apps and system services
+- **Linux**: 15% allocation - Chroot environment and packages
+- **Windows (Lowest)**: 10% allocation - Wine prefix and applications
+
+See `docs/ERROR_HANDLING.md` for comprehensive priority system documentation.
+
+## Quick Start
+
+```bash
+# Install dependencies
+make install-dev
+
+# View system status
+python3 scripts/dashboard.py
+
+# Run tests
+make test
+
+# Format code
+make format
+```
+
+See [QUICKSTART.md](QUICKSTART.md) for detailed getting started guide.
+
+## Development
+
+### Available Commands
+
+```bash
+make help              # Show all commands
+make test              # Run all tests
+make test-cov          # Run tests with coverage
+make lint              # Run all linters
+make format            # Format code
+make ci                # Run all CI checks
+```
+
+### Testing
+
+- 23+ unit tests for core modules
+- Integration tests for system components
+- >80% code coverage target
+- Run with: `make test`
+
+### Code Quality
+
+- Black code formatting (100 char line)
+- isort import sorting
+- flake8 linting
+- mypy type checking
+- bandit security scanning
+- Pre-commit hooks available: `make pre-commit`
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
+
 ## Roadmap
 
 - [x] Initial architecture design
+- [x] Priority system implementation (AI > Android > Linux > Windows)
+- [x] Custom exception hierarchy
+- [x] Testing infrastructure (pytest, 23+ tests)
+- [x] CI/CD pipeline (GitHub Actions)
+- [x] Development tools (Makefile, dashboard, validation)
+- [x] Comprehensive documentation (5 guides)
+- [x] Code quality tools (black, isort, flake8, mypy, bandit)
 - [ ] Core AI daemon implementation
 - [ ] LLM service integration
 - [ ] Input handler modules
@@ -131,8 +200,8 @@ See [LICENSE](LICENSE) for details.
 - [ ] Network management
 - [ ] Snapshot system
 - [ ] Boot script system
-- [ ] Testing and optimization
-- [ ] Documentation and examples
+- [ ] Performance optimization
+- [ ] Device deployment
 
 ## Support
 
