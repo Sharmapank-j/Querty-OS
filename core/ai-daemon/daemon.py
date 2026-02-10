@@ -123,6 +123,54 @@ class QuertyAIDaemon:
         logger.info("Initializing services...")
 
         try:
+            # Initialize boot profile manager
+            logger.info("  - Boot profile: initializing")
+            self.health_status["services"]["boot_profile"] = "initializing"
+            from core.boot_profiles import BootProfileManager
+
+            self.boot_profile = BootProfileManager()
+            self.boot_profile.set_current_profile("ai_full")  # Default to AI-full
+            self.health_status["services"]["boot_profile"] = "ready"
+
+            # Initialize memory manager
+            logger.info("  - Memory manager: initializing")
+            self.health_status["services"]["memory_manager"] = "initializing"
+            from core.memory_manager import ContextWindowManager, TaskMemory
+
+            self.memory_manager = {
+                "context": ContextWindowManager(max_tokens=4096),
+                "tasks": TaskMemory(),
+            }
+            self.health_status["services"]["memory_manager"] = "ready"
+
+            # Initialize security layer
+            logger.info("  - Security layer: initializing")
+            self.health_status["services"]["security"] = "initializing"
+            from core.security_layer import PromptFirewall, AuditLogger, PermissionManager
+
+            self.security_layer = {
+                "firewall": PromptFirewall(),
+                "audit": AuditLogger(),
+                "permissions": PermissionManager(),
+            }
+            self.health_status["services"]["security"] = "ready"
+
+            # Initialize plugin manager
+            logger.info("  - Plugin manager: initializing")
+            self.health_status["services"]["plugin_manager"] = "initializing"
+            from core.plugin_system import PluginManager
+
+            self.plugin_manager = PluginManager()
+            self.health_status["services"]["plugin_manager"] = "ready"
+
+            # Initialize OTA manager
+            logger.info("  - OTA manager: initializing")
+            self.health_status["services"]["ota"] = "initializing"
+            from core.ota_manager import OTAManager
+
+            self.ota_manager = OTAManager()
+            self.health_status["services"]["ota"] = "ready"
+
             # Initialize LLM service
             logger.info("  - LLM service: initializing")
             self.health_status["services"]["llm"] = "initializing"
@@ -158,42 +206,6 @@ class QuertyAIDaemon:
             self.health_status["services"]["snapshot"] = "initializing"
             # TODO: Complete implementation
             self.health_status["services"]["snapshot"] = "ready"
-
-            # Initialize boot profile manager
-            logger.info("  - Boot profile: initializing")
-            self.health_status["services"]["boot_profile"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["boot_profile"] = "ready"
-
-            # Initialize plugin manager
-            logger.info("  - Plugin manager: initializing")
-            self.health_status["services"]["plugin_manager"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["plugin_manager"] = "ready"
-
-            # Initialize memory manager
-            logger.info("  - Memory manager: initializing")
-            self.health_status["services"]["memory_manager"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["memory_manager"] = "ready"
-
-            # Initialize security layer
-            logger.info("  - Security layer: initializing")
-            self.health_status["services"]["security"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["security"] = "ready"
-
-            # Initialize CLI/API
-            logger.info("  - CLI/API: initializing")
-            self.health_status["services"]["cli_api"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["cli_api"] = "ready"
-
-            # Initialize OTA manager
-            logger.info("  - OTA manager: initializing")
-            self.health_status["services"]["ota"] = "initializing"
-            # TODO: Complete implementation
-            self.health_status["services"]["ota"] = "ready"
 
             logger.info("All services initialized")
             self.health_status["status"] = "running"
