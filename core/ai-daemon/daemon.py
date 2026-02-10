@@ -146,7 +146,7 @@ class QuertyAIDaemon:
             # Initialize security layer
             logger.info("  - Security layer: initializing")
             self.health_status["services"]["security"] = "initializing"
-            from core.security_layer import PromptFirewall, AuditLogger, PermissionManager
+            from core.security_layer import AuditLogger, PermissionManager, PromptFirewall
 
             self.security_layer = {
                 "firewall": PromptFirewall(),
