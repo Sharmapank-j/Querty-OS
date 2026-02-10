@@ -1,0 +1,26 @@
+[Unit]
+Description=Querty-OS AI Daemon
+Documentation=https://github.com/Sharmapank-j/Querty-OS
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/data/querty-os
+ExecStart=/usr/bin/python3 /data/querty-os/core/ai-daemon/daemon.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Resource limits (can be adjusted per boot profile)
+CPUQuota=100%
+MemoryLimit=4G
+
+# Security
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
