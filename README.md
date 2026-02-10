@@ -4,6 +4,15 @@
 
 Querty-OS is an Android-based AI-first system layer (not a ROM) where a local administrator AI serves as the primary interface. It enables voice/text/camera control, automation, multi-OS workflows (Android, Linux, Windows apps), safe updates, and rollback — strictly on user command.
 
+## 📋 Quick Links
+
+- **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Sandbox Setup](SANDBOX_SETUP.md)** - Test in virtual environments (Docker, QEMU, Android Emulator)
+- **[Device Deployment](POCO_X4_PRO_DEPLOYMENT.md)** - Install on Poco X4 Pro 5G
+- **[Quick Reference](SETUP_QUICK_REFERENCE.md)** - All commands in one place
+- **[Architecture](ARCHITECTURE_VERIFICATION.md)** - System design and verification
+- **[Contributing](CONTRIBUTING.md)** - Development guidelines
+
 ## Overview
 
 Querty-OS transforms your Android device into an intelligent, autonomous system capable of:
@@ -35,6 +44,62 @@ Querty-OS/
 ├── docs/                      # Documentation
 └── libs/                      # Shared libraries
 ```
+
+## 🚀 Getting Started
+
+### Test in Sandbox First (Highly Recommended)
+
+```bash
+# Clone repository
+git clone https://github.com/Sharmapank-j/Querty-OS.git
+cd Querty-OS
+
+# Install dependencies
+pip3 install -r requirements.txt
+
+# Run comprehensive sandbox tests
+bash virtualization/sandbox/test-sandbox.sh
+# Expected: ✓ All tests passed! (18/18)
+```
+
+**Sandbox Options:**
+1. **Docker** - Fastest, recommended for development
+2. **QEMU/KVM** - Full system virtualization
+3. **Android Emulator** - Android-specific testing
+
+See **[SANDBOX_SETUP.md](SANDBOX_SETUP.md)** for complete virtualization guide.
+
+### Deploy to Poco X4 Pro 5G
+
+⚠️ **Only after successful sandbox testing!**
+
+Complete step-by-step guide: **[POCO_X4_PRO_DEPLOYMENT.md](POCO_X4_PRO_DEPLOYMENT.md)**
+
+Quick overview:
+1. Unlock bootloader (⚠️ erases all data)
+2. Install TWRP recovery
+3. Create comprehensive backups
+4. Setup tri-boot (Android/Linux/Windows)
+5. Install Querty-OS
+6. Test and create snapshots
+
+### Quick Commands
+
+```bash
+# Docker quick start
+docker-compose up querty-os
+
+# System dashboard
+python3 scripts/dashboard.py
+
+# Run all tests
+make test
+
+# View logs
+tail -f /var/log/querty-ai-daemon.log
+```
+
+See **[SETUP_QUICK_REFERENCE.md](SETUP_QUICK_REFERENCE.md)** for all commands.
 
 ## Key Features
 
