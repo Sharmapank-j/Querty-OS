@@ -1,0 +1,160 @@
+version: '3.8'
+
+services:
+  # Main Querty-OS service
+  querty-os:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: querty-os:latest
+    container_name: querty-os-main
+    hostname: querty-os
+    restart: unless-stopped
+    
+    # Resource limits (matching priority: AI 40%, Android 35%, Linux 15%, Windows 10%)
+    deploy:
+      resources:
+        limits:
+          cpus: '4.0'
+          memory: 8G
+        reservations:
+          cpus: '2.0'
+          memory: 4G
+    
+    # Volumes for persistent data
+    volumes:
+      - querty-data:/data/querty
+      - querty-logs:/var/log
+      - ./config:/opt/querty-os/config:ro
+      - ./scripts:/opt/querty-os/scripts:ro
+    
+    # Environment variables
+    environment:
+      - QUERTY_MODE=production
+      - QUERTY_LOG_LEVEL=INFO
+      - QUERTY_PRIORITY_AI=40
+      - QUERTY_PRIORITY_ANDROID=35
+      - QUERTY_PRIORITY_LINUX=15
+      - QUERTY_PRIORITY_WINDOWS=10
+      - QUERTY_ENABLE_SNAPSHOTS=true
+      - QUERTY_SNAPSHOT_INTERVAL=3600
+    
+    # Network configuration
+    networks:
+      - querty-network
+    
+    # Ports
+    ports:
+      - "8080:8080"  # API/Management
+      - "8081:8081"  # Monitoring
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python3", "/opt/querty-os/scripts/utils/check-status.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    
+    # Capabilities (for Android/system operations)
+    cap_add:
+      - SYS_ADMIN
+      - NET_ADMIN
+      - SYS_PTRACE
+    
+    # Security options
+    security_opt:
+      - apparmor=unconfined
+    
+    # Privileged mode (required for some Android operations)
+    # privileged: true  # Uncomment if needed
+
+  # Development environment
+  querty-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: querty-os:dev
+    container_name: querty-os-dev
+    hostname: querty-dev
+    
+    # Mount source code for live development
+    volumes:
+      - .:/opt/querty-os
+      - querty-dev-data:/data/querty
+      - querty-dev-logs:/var/log
+      - ~/.ssh:/home/querty/.ssh:ro  # SSH keys for git
+    
+    environment:
+      - QUERTY_MODE=development
+      - QUERTY_LOG_LEVEL=DEBUG
+      - PYTHONDONTWRITEBYTECODE=1
+    
+    networks:
+      - querty-network
+    
+    ports:
+      - "8082:8080"  # Dev API
+      - "8083:8081"  # Dev Monitoring
+      - "5678:5678"  # Debugger
+    
+    # Keep container running
+    tty: true
+    stdin_open: true
+    
+    command: /bin/bash
+
+  # Monitoring service (optional)
+  querty-monitor:
+    image: prom/prometheus:latest
+    container_name: querty-monitor
+    
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    
+    networks:
+      - querty-network
+    
+    ports:
+      - "9090:9090"
+    
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    
+    profiles:
+      - monitoring
+
+# Networks
+networks:
+  querty-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+# Volumes
+volumes:
+  querty-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/production
+  
+  querty-logs:
+    driver: local
+  
+  querty-dev-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./data/development
+  
+  querty-dev-logs:
+    driver: local
+  
+  prometheus-data:
+    driver: local

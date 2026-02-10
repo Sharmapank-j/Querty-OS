@@ -1,0 +1,110 @@
+FROM ubuntu:22.04
+
+# Metadata
+LABEL maintainer="Querty-OS Team"
+LABEL description="Querty-OS Development Environment"
+LABEL version="0.1.0-dev"
+
+# Set environment variables
+ENV DEBIAN_FRONTEND=noninteractive
+ENV PYTHONUNBUFFERED=1
+ENV QUERTY_HOME=/opt/querty-os
+ENV QUERTY_DATA=/data/querty
+ENV PATH="${QUERTY_HOME}/scripts:${PATH}"
+
+# Install system dependencies + development tools
+RUN apt-get update && apt-get install -y \
+    # Base utilities
+    curl \
+    wget \
+    git \
+    vim \
+    nano \
+    htop \
+    tmux \
+    screen \
+    # Build essentials
+    build-essential \
+    gcc \
+    g++ \
+    make \
+    cmake \
+    pkg-config \
+    # Python and development
+    python3.11 \
+    python3.11-dev \
+    python3-pip \
+    python3-venv \
+    # Development tools
+    gdb \
+    strace \
+    ltrace \
+    valgrind \
+    # System tools
+    psmisc \
+    procps \
+    iproute2 \
+    net-tools \
+    iputils-ping \
+    dnsutils \
+    # Audio/Video
+    ffmpeg \
+    libavcodec-dev \
+    libavformat-dev \
+    libswscale-dev \
+    # Android tools
+    adb \
+    fastboot \
+    android-sdk-platform-tools \
+    # Chroot and container tools
+    debootstrap \
+    schroot \
+    # Wine dependencies
+    wine64 \
+    wine32 \
+    winetricks \
+    # Documentation
+    man-db \
+    manpages-dev \
+    # Cleanup
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create application directories
+RUN mkdir -p ${QUERTY_HOME} ${QUERTY_DATA} \
+    && mkdir -p ${QUERTY_DATA}/{ai,android,linux,windows,snapshots,logs}
+
+# Set work directory
+WORKDIR ${QUERTY_HOME}
+
+# Copy application files
+COPY . ${QUERTY_HOME}/
+
+# Install Python dependencies (dev + production)
+RUN pip3 install --upgrade pip setuptools wheel && \
+    pip3 install -r requirements-dev.txt && \
+    pip3 install -e .
+
+# Install pre-commit hooks
+RUN pip3 install pre-commit && \
+    cd ${QUERTY_HOME} && \
+    git init && \
+    pre-commit install || true
+
+# Create necessary directories and set permissions
+RUN mkdir -p /var/log && \
+    touch /var/log/querty-ai-daemon.log && \
+    chmod 666 /var/log/querty-ai-daemon.log
+
+# Create non-root user for development
+RUN useradd -m -u 1000 -s /bin/bash querty && \
+    chown -R querty:querty ${QUERTY_HOME} ${QUERTY_DATA} /var/log/querty-ai-daemon.log
+
+# Switch to non-root user
+USER querty
+
+# Expose ports
+EXPOSE 8080 8081 5678
+
+# Default command - interactive shell for development
+CMD ["/bin/bash"]
