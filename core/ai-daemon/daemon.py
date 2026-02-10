@@ -11,8 +11,7 @@ import sys
 import threading
 import time
 from datetime import datetime
-from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict
 
 # Configure logging
 logging.basicConfig(
@@ -104,7 +103,6 @@ class QuertyAIDaemon:
         self.last_crash_time = None
 
         logger.info("Querty AI Daemon initializing...")
-
 
     def get_health_status(self) -> Dict:
         """
@@ -204,7 +202,6 @@ class QuertyAIDaemon:
             logger.error(f"Failed to initialize services: {e}", exc_info=True)
             self.health_status["status"] = "error"
             raise
-
 
     def start(self):
         """Start the AI daemon with watchdog."""

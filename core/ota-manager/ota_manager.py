@@ -117,9 +117,7 @@ class OTAManager:
                 download_url="https://example.com/querty-os-0.2.0.tar.gz",
                 incremental=True,
                 base_version=self.current_version,
-                changelog=(
-                    "- Added new features\n- Bug fixes\n- Performance improvements"
-                ),
+                changelog=("- Added new features\n- Bug fixes\n- Performance improvements"),
             )
 
             if self._is_newer_version(available_update.version, self.current_version):
@@ -217,7 +215,7 @@ class OTAManager:
             return None
 
         try:
-            timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+            timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
             snapshot_id = f"pre-update-{self.current_version}-{timestamp}"
             logger.info(f"Creating pre-update snapshot: {snapshot_id}")
             return snapshot_id
