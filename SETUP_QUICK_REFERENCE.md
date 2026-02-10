@@ -2,21 +2,44 @@
 
 ## 🎯 Complete Workflow: Sandbox → Device
 
+### Step 0: Setup Your Development Environment
+
+#### For Termux Users (Android)
+See **[TERMUX_SETUP.md](TERMUX_SETUP.md)** for complete Termux setup instructions.
+
+Quick Termux commands:
+```bash
+pkg update && pkg upgrade -y
+pkg install -y python git
+git clone https://github.com/Sharmapank-j/Querty-OS.git
+cd Querty-OS
+make install-dev  # REQUIRED before running tests!
+make test
+```
+
+#### For Desktop/Laptop Users
+Continue with Step 1 below.
+
 ### Step 1: Sandbox Testing (REQUIRED)
+
+**⚠️ IMPORTANT**: Install development dependencies first!
 
 ```bash
 # Clone repository
 git clone https://github.com/Sharmapank-j/Querty-OS.git
 cd Querty-OS
 
-# Install dependencies
-pip3 install -r requirements.txt
+# Install development dependencies (REQUIRED!)
+make install-dev
+# Or manually: pip3 install -r requirements-dev.txt && pip3 install -e .
 
 # Run sandbox tests
 bash virtualization/sandbox/test-sandbox.sh
 
 # Expected: ✓ All tests passed! Ready for device deployment.
 ```
+
+**Common Error**: If you see "No module named pytest", run `make install-dev` first.
 
 ### Step 2: Choose Sandbox Environment
 
@@ -75,6 +98,7 @@ bash setup-emulator.sh
 |----------|---------|-------|
 | **README.md** | Project overview | Main |
 | **QUICKSTART.md** | 5-minute getting started | Quick |
+| **TERMUX_SETUP.md** | Termux setup for Android | Android Dev |
 | **SANDBOX_SETUP.md** | Virtual environment setup | 430 lines |
 | **POCO_X4_PRO_DEPLOYMENT.md** | Device installation | 715 lines |
 | **ARCHITECTURE_VERIFICATION.md** | Architecture details | Technical |
