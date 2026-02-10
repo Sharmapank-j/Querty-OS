@@ -1,0 +1,49 @@
+# Querty-OS Development Dependencies
+-r requirements.txt
+
+# Testing
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.11.0
+pytest-timeout>=2.1.0
+pytest-xdist>=3.3.0  # Parallel testing
+pytest-benchmark>=4.0.0
+hypothesis>=6.82.0  # Property-based testing
+
+# Code Quality
+black>=23.7.0  # Code formatting
+isort>=5.12.0  # Import sorting
+flake8>=6.1.0  # Linting
+pylint>=2.17.0  # Advanced linting
+mypy>=1.4.0  # Type checking
+bandit>=1.7.5  # Security scanning
+safety>=2.3.0  # Dependency security checking
+
+# Documentation
+sphinx>=7.0.0
+sphinx-rtd-theme>=1.2.0
+sphinx-autodoc-typehints>=1.23.0
+myst-parser>=2.0.0  # Markdown support
+
+# Pre-commit hooks
+pre-commit>=3.3.0
+
+# Development utilities
+ipython>=8.14.0
+ipdb>=0.13.13
+bpython>=0.24
+
+# Coverage and reporting
+coverage[toml]>=7.2.0
+codecov>=2.1.13
+
+# Build and packaging
+build>=0.10.0
+twine>=4.0.0
+setuptools>=68.0.0
+wheel>=0.40.0
+
+# Profiling and debugging
+py-spy>=0.3.14
+memory-profiler>=0.61.0
