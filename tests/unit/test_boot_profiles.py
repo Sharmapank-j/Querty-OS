@@ -2,6 +2,7 @@
 """Tests for boot profiles system."""
 
 import pytest
+
 from core.boot_profiles import BootProfile, BootProfileManager, ProfileType
 
 
