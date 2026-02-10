@@ -173,9 +173,7 @@ class BootProfileManager:
             return False
 
         self.current_profile = profile
-        logger.info(
-            f"Switched to boot profile: {profile.name} ({profile.profile_type.value})"
-        )
+        logger.info(f"Switched to boot profile: {profile.name} ({profile.profile_type.value})")
         return True
 
     def get_current_profile(self) -> Optional[BootProfile]:
@@ -186,13 +184,9 @@ class BootProfileManager:
         """List all available boot profile names."""
         return list(self.profiles.keys())
 
-    def is_feature_enabled(
-        self, feature_name: str, profile_name: Optional[str] = None
-    ) -> bool:
+    def is_feature_enabled(self, feature_name: str, profile_name: Optional[str] = None) -> bool:
         """Check if a feature is enabled in a profile."""
-        profile = (
-            self.get_profile(profile_name) if profile_name else self.current_profile
-        )
+        profile = self.get_profile(profile_name) if profile_name else self.current_profile
         if not profile:
             return False
         return profile.features.get(feature_name, False)

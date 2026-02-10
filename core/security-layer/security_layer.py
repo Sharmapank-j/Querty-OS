@@ -137,10 +137,7 @@ class PromptFirewall:
         # various whitespace and malformed tags, though technically
         # HTML closing tags don't support attributes
         sanitized = re.sub(
-            r"<script\b[^>]*>.*?</\s*script[^>]*>",
-            "",
-            sanitized,
-            flags=re.DOTALL | re.IGNORECASE
+            r"<script\b[^>]*>.*?</\s*script[^>]*>", "", sanitized, flags=re.DOTALL | re.IGNORECASE
         )
         sanitized = re.sub(r"javascript:", "", sanitized, flags=re.IGNORECASE)
         sanitized = re.sub(r"on\w+\s*=", "", sanitized, flags=re.IGNORECASE)
