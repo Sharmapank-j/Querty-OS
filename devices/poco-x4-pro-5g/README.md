@@ -37,6 +37,29 @@ Using TWRP/OrangeFox recovery as the OS selector.
 - **Display**: 6.67" AMOLED, 120Hz
 - **Android Version**: Android 11/12/13 (MIUI 13/14)
 
+## ⚡ Native Execution - No Emulation!
+
+**This tri-boot system provides TRUE NATIVE execution:**
+
+- ✅ **Linux runs NATIVELY** - NOT in proot/chroot/container
+  - Full Linux kernel boots directly
+  - Complete hardware access
+  - Real root privileges
+  - 100% native performance
+  
+- ✅ **Windows apps run NATIVELY** - NOT via Wine/emulation  
+  - Real Windows 11 ARM64 OS
+  - ARM64 apps run at full speed
+  - Windows handles x64 emulation internally
+  - Full Windows features
+
+- ✅ **Android**: Support for Evolution OS, GrapheneOS, any ROM
+  - Full ROM compatibility
+  - Native Android performance
+  - Switch between ROMs easily
+
+**See [NATIVE-EXECUTION.md](docs/NATIVE-EXECUTION.md) for technical details.**
+
 ## How It Works
 
 Since Qualcomm's secure boot chain doesn't support native multi-boot:
@@ -60,11 +83,19 @@ Since Qualcomm's secure boot chain doesn't support native multi-boot:
    └─────────────┘   └─────────────┘   └─────────────┘
 ```
 
-**This is pre-boot OS swapping**, not live chainloading:
+**This is pre-boot OS swapping with NATIVE execution**, not emulation or containers:
 1. Boot into TWRP Recovery
 2. Select desired OS from menu
 3. Script flashes appropriate boot.img to boot partition
 4. Device reboots into selected OS
+5. Each OS runs **natively** on its own partition
+
+**Key Advantages:**
+- ✅ Linux runs **natively** (NOT in proot/chroot container)
+- ✅ Full kernel access and hardware control
+- ✅ Windows apps run **natively** via ARM64 (NOT Wine emulation)
+- ✅ Each OS is completely independent
+- ✅ No performance penalty from containerization
 
 ## Current Status
 
@@ -183,6 +214,7 @@ For a 128GB device:
 
 ## Documentation
 
+- **[NATIVE-EXECUTION.md](docs/NATIVE-EXECUTION.md)** - How Linux/Windows run natively (NOT emulated)
 - **[TRI-BOOT-GUIDE.md](docs/TRI-BOOT-GUIDE.md)** - Complete installation guide
 - **[QUICK-REFERENCE.md](docs/QUICK-REFERENCE.md)** - Commands cheat sheet
 - **[RISK-AND-RECOVERY.md](docs/RISK-AND-RECOVERY.md)** - Risk assessment and recovery
@@ -213,14 +245,22 @@ See the main [Querty-OS documentation](../../README.md) for more details.
 ### Operating Systems
 
 - **Android**: Any custom ROM compatible with veux/peux
-  - MIUI, LineageOS, PixelExperience, etc.
+  - **Evolution OS** (recommended for privacy)
+  - **GrapheneOS** (if ported to veux/peux)
+  - LineageOS, PixelExperience, ArrowOS
+  - MIUI (stock)
 - **Windows ARM**: Windows 10/11 ARM64
+  - Native UEFI boot (NOT emulation)
   - Requires UEFI port for Snapdragon 695
-  - Currently experimental
+  - Run Windows apps natively via ARM64
+  - Currently experimental on SD695
 - **Linux**: 
+  - **Native Linux boot** (NOT proot/chroot from Android)
+  - Dedicated Linux partition with full kernel
   - postmarketOS (when available)
   - Ubuntu Touch (if ported)
-  - Other mainline kernel distributions
+  - Fedora ARM, Arch Linux ARM
+  - Full desktop environment support
 
 ### Known Issues
 
