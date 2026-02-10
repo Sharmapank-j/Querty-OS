@@ -2,9 +2,11 @@
 Test fixtures for Querty-OS test suite.
 """
 
+from unittest.mock import MagicMock, Mock
+
 import pytest
-from unittest.mock import Mock, MagicMock
-from core.priority import SystemPriority, ResourcePriority, StoragePriorityManager
+
+from core.priority import ResourcePriority, StoragePriorityManager, SystemPriority
 
 
 @pytest.fixture

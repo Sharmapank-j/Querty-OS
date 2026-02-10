@@ -66,7 +66,7 @@ jobs:
         continue-on-error: true
       
       - name: Upload security reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
@@ -134,7 +134,7 @@ jobs:
         run: twine check dist/*
       
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-packages
           path: dist/
@@ -155,14 +155,24 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
       
+      - name: Check if Sphinx docs exist
+        id: check_docs
+        run: |
+          if [ -f "docs/conf.py" ]; then
+            echo "docs_exist=true" >> $GITHUB_OUTPUT
+          else
+            echo "docs_exist=false" >> $GITHUB_OUTPUT
+            echo "Sphinx configuration not found, skipping documentation build"
+          fi
+      
       - name: Build documentation
+        if: steps.check_docs.outputs.docs_exist == 'true'
         run: |
           cd docs && make html
-        continue-on-error: true
       
       - name: Upload documentation
-        uses: actions/upload-artifact@v3
-        if: always()
+        if: steps.check_docs.outputs.docs_exist == 'true'
+        uses: actions/upload-artifact@v4
         with:
           name: documentation
           path: docs/_build/html/

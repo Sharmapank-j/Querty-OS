@@ -30,7 +30,8 @@ myst-parser>=2.0.0  # Markdown support
 pre-commit>=3.3.0
 
 # Development utilities
-ipython>=8.14.0
+ipython>=7.16.0; python_version < '3.9'
+ipython>=8.14.0; python_version >= '3.9'
 ipdb>=0.13.13
 bpython>=0.24
 
