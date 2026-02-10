@@ -53,7 +53,7 @@ python3 -m pytest --version
 
 Expected output:
 ```
-pytest 7.4.0 (or higher)
+pytest 9.0.2 (or higher)
 ```
 
 ### 6. Run Tests
@@ -113,8 +113,9 @@ df -h
 # Clean up package cache
 pkg clean
 
-# Clean Python cache
-find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+# Clean Python cache (safer method)
+find . -type d -name "__pycache__" -prune -exec rm -rf {} +
+find . -type f -name "*.pyc" -delete
 ```
 
 ## Development Workflow in Termux
