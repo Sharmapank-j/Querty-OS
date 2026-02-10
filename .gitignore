@@ -32,3 +32,19 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Querty-OS specific
+/data/querty-os/logs/
+/data/querty-os/tmp/
+*.pid
