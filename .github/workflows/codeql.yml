@@ -34,7 +34,8 @@ jobs:
       uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
-        # Specify default CLI version to avoid warning
+        # Specify CLI version explicitly to avoid fallback warning
+        # Using 'latest' ensures we have the most up-to-date security detections
         tools: latest
         # Queries to run
         queries: security-extended,security-and-quality
