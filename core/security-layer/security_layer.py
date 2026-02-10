@@ -133,10 +133,11 @@ class PromptFirewall:
         """
         sanitized = prompt
 
-        # Remove script tags - use a more robust pattern
-        # that handles whitespace in closing tags
+        # Remove script tags with a permissive pattern that handles
+        # various whitespace and malformed tags, though technically
+        # HTML closing tags don't support attributes
         sanitized = re.sub(
-            r"<script\b[^>]*>.*?</\s*script\s*>",
+            r"<script\b[^>]*>.*?</\s*script[^>]*>",
             "",
             sanitized,
             flags=re.DOTALL | re.IGNORECASE
