@@ -7,7 +7,7 @@ Manages different boot modes with varying feature sets and resource usage.
 import logging
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger("querty-boot-profiles")
 
@@ -28,7 +28,7 @@ class BootProfile:
     name: str
     profile_type: ProfileType
     enabled_services: List[str]
-    resource_limits: Dict[str, any]
+    resource_limits: Dict[str, Any]
     features: Dict[str, bool]
     description: str
 
