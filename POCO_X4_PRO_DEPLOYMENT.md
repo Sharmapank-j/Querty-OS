@@ -28,7 +28,7 @@ Complete step-by-step guide for installing Querty-OS on Poco X4 Pro 5G (veux/peu
 2. [Phase 1: Sandbox Testing](#phase-1-sandbox-testing-mandatory)
 3. [Phase 2: Device Preparation](#phase-2-device-preparation)
 4. [Phase 3: Bootloader Unlock](#phase-3-bootloader-unlock)
-5. [Phase 4: Custom Recovery](#phase-4-custom-recovery-twrp)
+5. [Phase 4: Custom Recovery](#phase-4-custom-recovery-orangefox)
 6. [Phase 5: Backup Everything](#phase-5-backup-everything)
 7. [Phase 6: Tri-Boot Setup](#phase-6-tri-boot-setup)
 8. [Phase 7: Querty-OS Installation](#phase-7-querty-os-installation)
@@ -39,6 +39,23 @@ Complete step-by-step guide for installing Querty-OS on Poco X4 Pro 5G (veux/peu
 ---
 
 ## Prerequisites
+
+### Choose Your Installation Method
+
+**💡 NEW: Don't have a laptop? No problem!**
+
+This guide assumes you have a laptop/PC. If you DON'T have a laptop, see:
+📱 **[No-Laptop Installation Guide](devices/poco-x4-pro-5g/docs/NO-LAPTOP-INSTALLATION.md)**
+
+Methods available without laptop:
+- ✅ Using rooted Android phone + Bugjaeger
+- ✅ Using normal Android phone + Termux
+- ✅ Using iPad (limited support)
+- ⚠️ Note: Bootloader unlock still requires PC access (one-time, 15 minutes)
+
+**Continue below if you have laptop/PC access:**
+
+---
 
 ### Required Hardware
 
@@ -216,67 +233,318 @@ fastboot oem device-info
 
 ---
 
-## Phase 4: Custom Recovery (TWRP)
+## Phase 4: Custom Recovery (OrangeFox - Recommended)
 
-### 4.1 Download TWRP
+**Why OrangeFox?** Better features, modern UI, built-in Magisk support, advanced file manager, better backup options. See [Complete OrangeFox Guide](devices/poco-x4-pro-5g/docs/ORANGEFOX-RECOVERY.md) for full details.
 
-Download latest TWRP for veux/peux:
+### 4.1 Download OrangeFox Recovery
+
+**Official Download Links:**
+
 ```bash
-# Visit: https://twrp.me/xiaomi/xiaomipocox4pro5g.html
-# Or from: https://sourceforge.net/projects/twrp-for-veux/
+# Create download directory
+mkdir -p ~/Downloads/orangefox
+cd ~/Downloads/orangefox
 
-wget https://sourceforge.net/projects/twrp-for-veux/files/latest/download -O twrp-veux.img
+# Option 1: Download from OrangeFox Official Website
+# Visit: https://orangefox.download/device/veux
+# Choose latest R11.1 Stable build for veux/peux
+
+# Option 2: Download from SourceForge
+wget "https://sourceforge.net/projects/orangefox/files/veux/OrangeFox-R11.1_X-Stable-veux-YYYYMMDD.zip/download" -O orangefox-veux.zip
+
+# Option 3: Download from GitHub Releases
+# Visit: https://github.com/OrangeFoxRecovery/device_xiaomi_veux/releases
+
+# Extract recovery image
+unzip orangefox-veux.zip recovery.img
+
+# Verify file (should be ~60-100 MB)
+ls -lh recovery.img
 ```
 
-### 4.2 Boot TWRP (Temporary)
+**Direct Links (Check for latest version):**
+- **OrangeFox Official**: https://orangefox.download/device/veux
+- **SourceForge Mirror**: https://sourceforge.net/projects/orangefox/files/veux/
+- **GitHub Releases**: https://github.com/OrangeFoxRecovery/device_xiaomi_veux/releases
+
+### 4.2 Boot OrangeFox (Temporary Test)
+
+Test OrangeFox before permanent installation:
 
 ```bash
 # Boot to fastboot
 adb reboot bootloader
 
-# Boot TWRP temporarily (don't flash yet)
-fastboot boot twrp-veux.img
+# Wait for fastboot mode (shows on screen)
+# Verify connection
+fastboot devices
 
-# Device will boot into TWRP recovery
+# Boot OrangeFox temporarily (doesn't replace existing recovery)
+fastboot boot recovery.img
+
+# Device will boot into OrangeFox recovery
+# Orange fox logo will appear
+# Wait 30-60 seconds for first boot
 ```
 
-### 4.3 Install TWRP Permanently
+**What to expect:**
+- Orange OrangeFox splash screen
+- Modern Material Design UI
+- Touch screen should work immediately
+- Better animations than TWRP
 
-**In TWRP:**
-1. Tap **Advanced** > **ADB Sideload**
-2. Swipe to start sideload
+### 4.3 Install OrangeFox Permanently
+
+**Method 1: Via Fastboot (Recommended)**
 
 ```bash
-# On PC
-adb sideload twrp-veux.img
+# Boot to fastboot mode
+adb reboot bootloader
+
+# Verify device connection
+fastboot devices
+# Should show your device serial
+
+# Flash OrangeFox to recovery partition
+fastboot flash recovery recovery.img
+
+# Expected output:
+# Sending 'recovery' (XXXXX KB)    OKAY
+# Writing 'recovery'               OKAY
+# Finished. Total time: X.XXXs
+
+# Boot into OrangeFox
+fastboot reboot recovery
+
+# OrangeFox should now boot
 ```
 
-Or install via fastboot:
+**Method 2: Via ADB Sideload (if you have existing recovery)**
+
+If you already have TWRP or another recovery:
+
 ```bash
+# Copy OrangeFox zip to device
+adb push orangefox-veux.zip /sdcard/
+
+# Boot into existing recovery
+adb reboot recovery
+
+# In recovery: Install > Select orangefox-veux.zip > Flash
+# Then: Reboot > Recovery
+# OrangeFox will now load
+```
+
+### 4.4 First Boot & Initial Setup
+
+**After OrangeFox boots:**
+
+1. **Password Screen** (if device encrypted)
+   - Enter your device lock screen password/PIN/pattern
+   - OrangeFox will decrypt /data partition
+
+2. **Main Menu**
+   - Modern orange-themed interface
+   - Touch screen works smoothly
+   - Multiple options available
+
+3. **Enable ADB** (Important!)
+   ```
+   OrangeFox Menu:
+   1. Tap "Settings"
+   2. Find "Enable ADB"
+   3. Swipe to enable
+   
+   Verify from PC:
+   adb devices
+   # Should show device in recovery mode
+   ```
+
+4. **Check Features**
+   - Swipe from right: File Manager (AromaFM)
+   - Swipe from bottom: Terminal
+   - Main menu: Backup, Install, Wipe, etc.
+
+**📖 For complete OrangeFox guide with all features, see:**  
+[OrangeFox Recovery Complete Guide](devices/poco-x4-pro-5g/docs/ORANGEFOX-RECOVERY.md)
+
+### 4.5 Alternative: TWRP (If OrangeFox Issues)
+
+If you have issues with OrangeFox, TWRP is still available:
+
+```bash
+# Download TWRP
+wget https://sourceforge.net/projects/twrp-for-veux/files/latest/download -O twrp-veux.img
+
+# Flash TWRP
 fastboot flash recovery twrp-veux.img
 fastboot reboot recovery
 ```
 
+**Note**: This guide assumes OrangeFox. Most instructions work identically in TWRP, but OrangeFox has better features.
+
 ---
 
-## Phase 5: Backup Everything
+## Phase 5: Backup Everything (CRITICAL!)
 
-**In TWRP Recovery:**
+**⚠️ DO NOT SKIP THIS STEP!** Backups are your safety net.
 
-### 5.1 Backup Critical Partitions
+**In OrangeFox Recovery:**
 
-1. Tap **Backup**
-2. Select:
-   - ✅ Boot
-   - ✅ System
-   - ✅ Vendor
-   - ✅ Data
-   - ✅ EFS (IMPORTANT!)
-   - ✅ Persist (IMPORTANT!)
+### 5.1 Create Comprehensive Backup
+
+**MOST IMPORTANT: EFS Backup (IMEI/Network)**
+
+```
+OrangeFox Menu:
+1. Tap "Backup"
+2. Deselect all partitions first
+3. Select ONLY "EFS"
+4. Name: EFS-backup-YYYYMMDD
+5. Swipe to backup
+6. Wait for completion (few seconds)
+
+⚠️ IMMEDIATELY copy EFS backup to computer!
+This contains your IMEI. Without it, no cellular network!
+```
+
+**Pull EFS to computer:**
+```bash
+# From PC
+adb pull /sdcard/Fox/Backups/ ~/poco-backups/
+# Or
+adb pull /sdcard/TWRP/BACKUPS/ ~/poco-backups/  # if using TWRP
+
+# Create multiple copies
+cp -r ~/poco-backups ~/poco-backups-backup
+# Upload to cloud storage (encrypted!)
+```
+
+### 5.2 Full System Backup
+
+**Create complete backup of current state:**
+
+```
+OrangeFox Menu:
+1. Tap "Backup"
+2. Select ALL critical partitions:
+   ✅ Boot (kernel, bootloader)
+   ✅ System (Android OS)
+   ✅ Vendor (drivers, firmware)
+   ✅ Data (your files, apps)
+   ✅ EFS (IMEI - already done, but include again)
+   ✅ Persist (sensor calibration, fingerprint)
+   ✅ Userdata (internal storage)
+
+3. Optional (large, but recommended):
+   ✅ System_ext
+   ✅ Product
+   
+4. Name: full-backup-stock-YYYYMMDD
+5. Enable compression (saves space)
+6. Select storage: Internal or SD card
+7. Swipe to backup
+8. Wait 20-40 minutes (depending on data size)
+9. Verify "Backup completed successfully"
+```
+
+### 5.3 Persist Partition Backup (Important!)
+
+Persist contains sensor calibration, fingerprint data:
+
+```
+OrangeFox Menu:
+1. Backup > Select only "Persist"
+2. Name: persist-backup-YYYYMMDD
 3. Swipe to backup
-4. Wait for completion (30-60 minutes)
+4. Copy to computer immediately
+```
 
-### 5.2 Copy Backup to PC
+### 5.4 Backup Using ADB (Alternative Method)
+
+Manual partition backups via ADB:
+
+```bash
+# Boot into OrangeFox
+adb reboot recovery
+
+# Wait for OrangeFox to load, then:
+adb shell
+
+# Create backup directory
+mkdir -p /sdcard/manual-backups
+
+# Backup critical partitions
+dd if=/dev/block/bootdevice/by-name/boot of=/sdcard/manual-backups/boot.img
+dd if=/dev/block/bootdevice/by-name/modem_fs1 of=/sdcard/manual-backups/modem_fs1.img
+dd if=/dev/block/bootdevice/by-name/modem_fs2 of=/sdcard/manual-backups/modem_fs2.img
+dd if=/dev/block/bootdevice/by-name/fsg of=/sdcard/manual-backups/fsg.img
+dd if=/dev/block/bootdevice/by-name/persist of=/sdcard/manual-backups/persist.img
+
+exit
+
+# Pull backups to PC
+adb pull /sdcard/manual-backups ~/poco-manual-backups/
+```
+
+### 5.5 Copy All Backups to Computer
+
+```bash
+# Pull all OrangeFox backups
+adb pull /sdcard/Fox/Backups/ ~/poco-orangefox-backups/
+
+# Verify backups
+ls -lh ~/poco-orangefox-backups/
+
+# Create archive (optional)
+tar -czf poco-backups-$(date +%Y%m%d).tar.gz ~/poco-orangefox-backups/
+
+# Store in multiple locations:
+# 1. External hard drive
+# 2. Cloud storage (encrypted!)
+# 3. Second computer
+```
+
+### 5.6 Backup Verification
+
+**Verify backups are complete:**
+
+```bash
+# Check backup sizes (should be reasonable)
+du -sh ~/poco-orangefox-backups/*
+
+# Critical backups must exist:
+ls -lh ~/poco-orangefox-backups/*/efs*
+ls -lh ~/poco-orangefox-backups/*/persist*
+ls -lh ~/poco-orangefox-backups/*/boot*
+
+# Each should be > 0 bytes
+```
+
+**In OrangeFox, verify:**
+```
+Menu > Backup > Restore:
+- Browse backups
+- All should be listed
+- Check backup dates and sizes
+```
+
+### 5.7 Backup Checklist
+
+Before proceeding, verify you have:
+
+- [ ] EFS backup created
+- [ ] EFS backup copied to computer (3+ locations)
+- [ ] Persist backup created
+- [ ] Full system backup created
+- [ ] All backups copied to computer
+- [ ] Backups verified and readable
+- [ ] Backup archive created
+- [ ] Multiple backup copies stored safely
+- [ ] Cloud backup uploaded (encrypted)
+
+**DO NOT PROCEED** until all checkboxes are ✅
 
 ```bash
 # In TWRP, mount Data partition
