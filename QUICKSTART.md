@@ -10,24 +10,30 @@ This guide will get you up and running with Querty-OS development quickly.
 - Git
 - Basic terminal knowledge
 
+**Using Termux on Android?** See **[TERMUX_SETUP.md](TERMUX_SETUP.md)** for detailed setup guide with copy-paste commands.
+
 ## 1. Clone and Setup
+
+**⚠️ IMPORTANT**: You must install development dependencies before running tests!
 
 ```bash
 # Clone the repository
 git clone https://github.com/Sharmapank-j/Querty-OS.git
 cd Querty-OS
 
-# Create virtual environment
+# Create virtual environment (optional but recommended)
 python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Install development dependencies
+# Install development dependencies (REQUIRED!)
 make install-dev
 
 # Or manually:
 pip install -r requirements-dev.txt
 pip install -e .
 ```
+
+**Common Error**: If you see `No module named pytest`, it means you haven't installed development dependencies. Run `make install-dev` to fix it.
 
 ## 2. Verify Installation
 
@@ -258,6 +264,24 @@ enable_priority_enforcement = true
 ```
 
 ## 11. Troubleshooting
+
+### No Module Named pytest
+
+**Error**: `python3: No module named pytest` or `ModuleNotFoundError: No module named 'pytest'`
+
+**Cause**: Development dependencies not installed.
+
+**Solution**:
+```bash
+# Install development dependencies
+make install-dev
+
+# Or manually
+pip install -r requirements-dev.txt
+
+# Verify pytest is installed
+python3 -m pytest --version
+```
 
 ### Import Errors
 
