@@ -5,7 +5,9 @@ A tri-boot solution for the Xiaomi Poco X4 Pro 5G enabling:
 - **Windows ARM** (via UEFI)
 - **Linux** (postmarketOS or Ubuntu Touch)
 
-Using TWRP/OrangeFox recovery as the OS selector.
+Using **OrangeFox Recovery** (recommended) or TWRP as the OS selector.
+
+**NEW**: Can be installed without a laptop! See [No-Laptop Installation Guide](docs/NO-LAPTOP-INSTALLATION.md)
 
 [![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)](https://www.android.com/)
 [![Windows ARM](https://img.shields.io/badge/Windows_ARM-0078D6?style=for-the-badge&logo=windows&logoColor=white)](https://www.microsoft.com/windows)
@@ -125,7 +127,9 @@ Before proceeding, ensure you have:
    fastboot oem device-info
    ```
 
-2. **Modified TWRP Recovery**
+2. **OrangeFox Recovery** (Recommended) or **TWRP Recovery**
+   - OrangeFox: Better features, modern UI - See [OrangeFox Guide](docs/ORANGEFOX-RECOVERY.md)
+   - TWRP: Alternative if OrangeFox has issues
    - Must include `parted` utility
    - Recommended: Latest OrangeFox or TWRP for veux/peux
 
@@ -136,10 +140,40 @@ Before proceeding, ensure you have:
    - Persist partition
    - EFS partition
 
-4. **Tools Required**
-   - ADB and Fastboot installed on PC
-   - USB cable (high quality recommended)
-   - Minimum 128GB device (256GB recommended)
+4. **Installation Method**
+   - **With Laptop**: Standard ADB/Fastboot tools
+   - **Without Laptop**: Rooted phone + Bugjaeger OR Termux
+   - See [No-Laptop Installation Guide](docs/NO-LAPTOP-INSTALLATION.md) for details
+
+## Installation Methods
+
+Choose your installation method based on available devices:
+
+### 📱 Method 1: No Laptop Required (NEW!)
+
+**Use if you have:**
+- Another rooted Android phone, OR
+- Normal Android phone with Termux, OR
+- iPad (limited support)
+
+**Guide**: [No-Laptop Installation Guide](docs/NO-LAPTOP-INSTALLATION.md)
+
+**Highlights:**
+- ✅ Flash recovery using OTG cable
+- ✅ Install Querty-OS using another phone
+- ✅ Create backups without PC
+- ✅ Complete setup mobile-only
+- ⚠️ Bootloader unlock still needs PC (one-time, 15 min)
+
+### 💻 Method 2: With Laptop (Traditional)
+
+**Use if you have:**
+- Windows/Linux/Mac computer
+- USB cable
+
+**Guides**:
+- [Complete Deployment Guide](../../POCO_X4_PRO_DEPLOYMENT.md)
+- [OrangeFox Recovery Guide](docs/ORANGEFOX-RECOVERY.md)
 
 ## Quick Start
 
