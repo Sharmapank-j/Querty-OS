@@ -382,7 +382,31 @@ class FilesystemSnapshot:
             ]:
                 logger.info(f"Restoring tar snapshot: {snapshot_id} to {dest_path}")
                 with tarfile.open(snapshot_path, "r:*") as tar:
-                    tar.extractall(dest)
+                    # Safely extract tar members to prevent directory traversal
+                    dest_abs = dest.resolve()
+                    for member in tar.getmembers():
+                        member_name = member.name
+                        # Reject absolute paths and path traversal components
+                        if os.path.isabs(member_name) or ".." in Path(member_name).parts:
+                            raise SnapshotError(
+                                f"Illegal path in tar archive entry: {member_name}",
+                                error_code="INVALID_SNAPSHOT_CONTENT",
+                                details={"snapshot_id": snapshot_id, "entry": member_name},
+                            )
+                        target_path = (dest_abs / member_name).resolve()
+                        try:
+                            target_path.relative_to(dest_abs)
+                        except ValueError:
+                            raise SnapshotError(
+                                f"Tar archive entry escapes destination directory: {member_name}",
+                                error_code="INVALID_SNAPSHOT_CONTENT",
+                                details={
+                                    "snapshot_id": snapshot_id,
+                                    "entry": member_name,
+                                    "destination": str(dest_abs),
+                                },
+                            )
+                        tar.extract(member, path=dest_abs)
 
             elif metadata.format == SnapshotFormat.RSYNC:
                 logger.info(f"Restoring rsync snapshot: {snapshot_id} to {dest_path}")
