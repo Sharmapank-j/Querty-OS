@@ -1,5 +1,5 @@
 """Compatibility package for the Querty AI daemon."""
 
-from .daemon import main, QuertyAIDaemon, DaemonWatchdog
+from .daemon import DaemonWatchdog, QuertyAIDaemon, main
 
 __all__ = ["main", "QuertyAIDaemon", "DaemonWatchdog"]

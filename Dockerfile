@@ -51,7 +51,7 @@ RUN apt-get update && apt-get install -y \
     schroot \
     # Wine dependencies (for Windows app support)
     wine64 \
-    wine32 \
+    libwine \
     winetricks \
     # Cleanup
     && apt-get clean \
