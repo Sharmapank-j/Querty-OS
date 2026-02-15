@@ -284,7 +284,7 @@ class FilesystemSnapshot:
             cmd.extend([source_str, str(snapshot_path) + "/"])
 
             # Execute rsync
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=3600)
+            subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=3600)
 
             # Calculate size and file count
             size_bytes = sum(f.stat().st_size for f in snapshot_path.rglob("*") if f.is_file())
