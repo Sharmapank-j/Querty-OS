@@ -1,12 +1,6 @@
 """Querty-OS Agent Automation Package"""
 
-from .action_executor import (
-    Action,
-    ActionExecutor,
-    ActionResult,
-    ActionStatus,
-    CommandAction,
-)
+from .action_executor import Action, ActionExecutor, ActionResult, ActionStatus, CommandAction
 from .agent_automation import Agent, AgentAutomationSystem, AgentMode, Task, TaskStatus
 from .workflow_templates import WorkflowStep, WorkflowTemplate, WorkflowTemplates
 

@@ -1,13 +1,7 @@
 """Querty-OS OS Control Package"""
 
 from .android_api import AndroidAPI, IntentAction, IntentResult, PackageInfo, PackageState
-from .app_bridge import (
-    AppBridge,
-    BridgeEndpoint,
-    TransferJob,
-    TransferProtocol,
-    TransferStatus,
-)
+from .app_bridge import AppBridge, BridgeEndpoint, TransferJob, TransferProtocol, TransferStatus
 from .linux_chroot import ChrootInfo, ChrootState, LinuxChroot, PackageManager
 from .os_control import (
     AndroidController,
