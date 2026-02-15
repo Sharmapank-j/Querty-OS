@@ -424,18 +424,16 @@ class VPNManager:
             try:
                 subprocess.run(
                     ["wg-quick", "down", config.config_file],
+                    timeout=10,
+                )
+            except (KeyboardInterrupt, SystemExit):
+                raise
             except Exception as exc:
                 logger.debug(
                     "Failed to bring down WireGuard interface with config %s: %s",
                     config.config_file,
                     exc,
                 )
-                    timeout=10,
-                )
-            except (KeyboardInterrupt, SystemExit):
-                raise
-            except Exception:
-                pass
 
     def get_connection(self, name: str) -> Optional[VPNConnection]:
         """
