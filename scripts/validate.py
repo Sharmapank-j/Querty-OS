@@ -17,7 +17,11 @@ def run_command(cmd, description):
 
     try:
         result = subprocess.run(
-            cmd, shell=True, capture_output=True, text=True, cwd=Path(__file__).parent
+            cmd,
+            shell=True,  # nosec B602 - commands are hardcoded, not user input
+            capture_output=True,
+            text=True,
+            cwd=Path(__file__).parent,
         )
 
         if result.returncode == 0:

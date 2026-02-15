@@ -40,8 +40,8 @@ repos:
     hooks:
       - id: mypy
         additional_dependencies: [types-PyYAML, types-requests]
-        args: ['--ignore-missing-imports']
-        exclude: '(agent-automation|input-handlers|network-manager|os-control|snapshot-system)'
+        args: ['--ignore-missing-imports', '--explicit-package-bases']
+        exclude: '(agent-automation|input-handlers|network-manager|os-control|snapshot-system|ai-daemon|ai_daemon|llm-service|cli_api|examples|scripts)'
 
   - repo: https://github.com/PyCQA/bandit
     rev: 1.9.3

@@ -24,7 +24,7 @@ class SystemPriority(IntEnum):
     @classmethod
     def get_name(cls, priority: int) -> str:
         """Get human-readable name for priority level."""
-        names = {
+        names: Dict[int, str] = {
             cls.WINDOWS: "Windows",
             cls.LINUX: "Linux",
             cls.ANDROID: "Android",
