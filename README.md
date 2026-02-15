@@ -58,7 +58,7 @@ Quick Termux setup:
 ```bash
 # Install dependencies
 pkg update && pkg upgrade -y
-pkg install -y python git
+pkg install -y python git make
 
 # Clone and setup
 git clone https://github.com/Sharmapank-j/Querty-OS.git
