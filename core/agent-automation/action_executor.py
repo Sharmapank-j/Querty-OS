@@ -121,8 +121,8 @@ class CommandAction(Action):
 
     def execute(self) -> str:
         """Execute the command."""
-        import subprocess
         import shlex
+        import subprocess
 
         try:
             # Use shell=False for security, split command into list

@@ -5,7 +5,7 @@ Manages resource allocation priority: AI > Android > Linux > Windows
 
 import logging
 from enum import IntEnum
-from typing import Dict, Optional
+from typing import Dict, Optional, Tuple
 
 logger = logging.getLogger(__name__)
 
@@ -254,7 +254,7 @@ class StoragePriorityManager:
 
     def validate_allocation(
         self, requested: Dict[SystemPriority, float]
-    ) -> tuple[bool, Optional[str]]:
+    ) -> Tuple[bool, Optional[str]]:
         """
         Validate if requested storage allocation respects priority rules.
 
