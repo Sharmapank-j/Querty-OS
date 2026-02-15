@@ -147,9 +147,7 @@ class InputFusion:
             return None
 
         # Filter out low-confidence results
-        filtered_results = [
-            r for r in results if r.confidence >= self.min_confidence_threshold
-        ]
+        filtered_results = [r for r in results if r.confidence >= self.min_confidence_threshold]
 
         if not filtered_results:
             logger.warning("All results below confidence threshold")
@@ -298,10 +296,10 @@ class InputFusion:
         # Voice typically has priority for spoken commands
         if voice_result.confidence > text_result.confidence:
             primary = voice_result
-            confidence = (voice_result.confidence * 0.7 + text_result.confidence * 0.3)
+            confidence = voice_result.confidence * 0.7 + text_result.confidence * 0.3
         else:
             primary = text_result
-            confidence = (text_result.confidence * 0.7 + voice_result.confidence * 0.3)
+            confidence = text_result.confidence * 0.7 + voice_result.confidence * 0.3
 
         return FusedResult(
             primary_modality=primary.modality,

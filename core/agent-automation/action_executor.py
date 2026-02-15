@@ -209,18 +209,14 @@ class ActionExecutor:
                 result.output = output
 
             result.end_time = datetime.now()
-            result.duration_seconds = (
-                result.end_time - result.start_time
-            ).total_seconds()
+            result.duration_seconds = (result.end_time - result.start_time).total_seconds()
 
         except Exception as e:
             logger.error(f"Action {action.action_id} failed: {e}", exc_info=True)
             result.status = ActionStatus.FAILED
             result.error = str(e)
             result.end_time = datetime.now()
-            result.duration_seconds = (
-                result.end_time - result.start_time
-            ).total_seconds()
+            result.duration_seconds = (result.end_time - result.start_time).total_seconds()
 
         # Store in history
         self.execution_history.append(result)
