@@ -236,8 +236,10 @@ class LinuxChroot:
             for mount_point in reversed(mounted):
                 try:
                     self._run_command(["umount", mount_point], check=False)
-                except:
-                    pass
+                except Exception as cleanup_error:
+                    logger.warning(
+                        f"Failed to unmount chroot mount point {mount_point!r} during cleanup: {cleanup_error}"
+                    )
             info.state = ChrootState.ERROR
             raise
 
