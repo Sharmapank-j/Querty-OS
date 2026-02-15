@@ -42,12 +42,12 @@ if [ -d "/data/linux" ]; then
         mount -t proc proc /data/linux/proc 2>/dev/null
         log "Mounted /proc in chroot"
     fi
-    
+
     if ! mount | grep -q "/data/linux/sys"; then
         mount -t sysfs sys /data/linux/sys 2>/dev/null
         log "Mounted /sys in chroot"
     fi
-    
+
     if ! mount | grep -q "/data/linux/dev"; then
         mount -o bind /dev /data/linux/dev 2>/dev/null
         log "Mounted /dev in chroot"
@@ -69,10 +69,10 @@ if [ -f "$DAEMON_SCRIPT" ]; then
     # Start daemon in background
     python3 "$DAEMON_SCRIPT" > /data/querty-os/logs/daemon.log 2>&1 &
     DAEMON_PID=$!
-    
+
     # Save PID
     echo "$DAEMON_PID" > /data/querty-os/daemon.pid
-    
+
     log "AI Daemon started with PID: $DAEMON_PID"
 else
     log "WARNING: AI Daemon script not found at $DAEMON_SCRIPT"

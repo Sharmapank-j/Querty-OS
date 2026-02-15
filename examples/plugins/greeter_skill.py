@@ -5,6 +5,7 @@ Demonstrates a skill plugin for AI interactions.
 """
 
 from datetime import datetime
+
 from core.plugin_system import Plugin, PluginType
 
 

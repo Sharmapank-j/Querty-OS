@@ -8,8 +8,8 @@ import sys
 
 sys.path.insert(0, "/home/runner/work/Querty-OS/Querty-OS")
 
-import logging
-from datetime import datetime
+import logging  # noqa: E402
+from datetime import datetime  # noqa: E402
 
 # Configure logging
 logging.basicConfig(
@@ -28,7 +28,7 @@ def demo_boot_profiles():
     from core.boot_profiles import BootProfileManager
 
     manager = BootProfileManager()
-    print(f"✓ Boot Profile Manager initialized")
+    print("✓ Boot Profile Manager initialized")
     print(f"✓ Available profiles: {', '.join(manager.list_profiles())}")
 
     # Switch to minimal mode
@@ -55,11 +55,11 @@ def demo_plugin_system():
 
     from core.plugin_system import PluginManager
     from examples.plugins.calculator_plugin import CalculatorPlugin
-    from examples.plugins.system_monitor_plugin import SystemMonitorPlugin
     from examples.plugins.greeter_skill import GreeterSkill
+    from examples.plugins.system_monitor_plugin import SystemMonitorPlugin
 
     manager = PluginManager()
-    print(f"✓ Plugin Manager initialized")
+    print("✓ Plugin Manager initialized")
 
     # Load calculator plugin
     calc = CalculatorPlugin()
@@ -103,31 +103,31 @@ def demo_memory_manager():
     print("3. MEMORY MANAGER")
     print("=" * 70)
 
-    from core.memory_manager import ContextWindowManager, TaskMemory, PurgeRules
+    from core.memory_manager import ContextWindowManager, PurgeRules, TaskMemory
 
     # Context management
     context = ContextWindowManager(max_tokens=2048)
-    print(f"✓ Context Window Manager initialized (max: 2048 tokens)")
+    print("✓ Context Window Manager initialized (max: 2048 tokens)")
 
     # context.add_message("user", "Hello AI, how are you?")
     # context.add_message("assistant", "I'm doing well! How can I help you today?")
     # context.add_message("user", "Tell me about Querty-OS")
     # context.add_message("assistant", "Querty-OS is an AI-first system layer for Android...")
 
-    print(f"✓ Added 4 messages to context")
+    print("✓ Added 4 messages to context")
     print(f"  - Current tokens: {context.current_tokens}")
     print(f"  - Message count: {len(context.messages)}")
     print(f"  - Should prune: {context.should_prune()}")
 
     # Task memory
     task_mem = TaskMemory()
-    print(f"\n✓ Task Memory initialized")
+    print("\n✓ Task Memory initialized")
 
     task_mem.add_task("task1", "send_email", {"to": "user@example.com"}, priority=5)
     task_mem.add_task("task2", "check_weather", {"location": "London"}, priority=3)
     task_mem.add_task("task3", "set_reminder", {"time": "14:00"}, priority=4)
 
-    print(f"✓ Added 3 tasks to memory")
+    print("✓ Added 3 tasks to memory")
     recent = task_mem.get_recent_tasks(count=2)
     print(f"  - Recent tasks: {len(recent)}")
     for task in recent:
@@ -135,7 +135,7 @@ def demo_memory_manager():
 
     # Purge rules
     rules = PurgeRules(max_age_days=7, max_tokens=10000)
-    print(f"\n✓ Purge Rules configured")
+    print("\n✓ Purge Rules configured")
     print(f"  - Max age: {rules.max_age_days} days")
     print(f"  - Max tokens: {rules.max_tokens}")
 
@@ -146,16 +146,16 @@ def demo_security_layer():
     print("4. SECURITY LAYER")
     print("=" * 70)
 
-    from core.security_layer import PromptFirewall, AuditLogger, PermissionManager
+    from core.security_layer import AuditLogger, PermissionManager, PromptFirewall
 
     # Prompt firewall
     firewall = PromptFirewall()
-    print(f"✓ Prompt Firewall initialized")
+    print("✓ Prompt Firewall initialized")
 
     safe_prompt = "What is the weather today?"
     unsafe_prompt = "'; DROP TABLE users; --"
 
-    print(f"\n✓ Testing prompts:")
+    print("\n✓ Testing prompts:")
     print(f"  - '{safe_prompt}' → {'SAFE' if firewall.check_prompt(safe_prompt) else 'BLOCKED'}")
     print(
         f"  - '{unsafe_prompt}' → {'SAFE' if firewall.check_prompt(unsafe_prompt) else 'BLOCKED'}"
@@ -163,27 +163,27 @@ def demo_security_layer():
 
     # Audit logger
     audit = AuditLogger()
-    print(f"\n✓ Audit Logger initialized")
+    print("\n✓ Audit Logger initialized")
 
     audit.log_event("user_login", "User authenticated successfully", severity="INFO")
     audit.log_event("prompt_blocked", "Blocked SQL injection attempt", severity="WARNING")
     audit.log_event("system_start", "System initialized", severity="INFO")
 
-    print(f"✓ Logged 3 security events")
+    print("✓ Logged 3 security events")
     recent_events = audit.get_recent_events(count=2)
     for event in recent_events:
         print(f"  - [{event['severity']}] {event['event_type']}: {event['description']}")
 
     # Permission manager
     perm_mgr = PermissionManager()
-    print(f"\n✓ Permission Manager initialized")
+    print("\n✓ Permission Manager initialized")
 
     perm_mgr.add_role("admin", ["read", "write", "execute", "delete"])
     perm_mgr.add_role("user", ["read", "write"])
     perm_mgr.assign_role("alice", "admin")
     perm_mgr.assign_role("bob", "user")
 
-    print(f"✓ Created roles and assigned users")
+    print("✓ Created roles and assigned users")
     print(f"  - Alice can delete: {perm_mgr.check_permission('alice', 'delete')}")
     print(f"  - Bob can delete: {perm_mgr.check_permission('bob', 'delete')}")
 
@@ -197,16 +197,16 @@ def demo_ota_manager():
     from core.ota_manager import OTAManager
 
     ota = OTAManager()
-    print(f"✓ OTA Manager initialized")
+    print("✓ OTA Manager initialized")
     print(f"  - Update directory: {ota.update_dir}")
     print(f"  - Current version: {ota.current_version}")
 
     # Simulate update check
-    print(f"\n✓ Update system ready")
-    print(f"  - Can check for updates")
-    print(f"  - Can download updates")
-    print(f"  - Can verify checksums")
-    print(f"  - Can rollback on failure")
+    print("\n✓ Update system ready")
+    print("  - Can check for updates")
+    print("  - Can download updates")
+    print("  - Can verify checksums")
+    print("  - Can rollback on failure")
 
     history = ota.get_update_history()
     print(f"  - Update history entries: {len(history)}")
@@ -221,27 +221,28 @@ def demo_integrated_daemon():
     from core.ai_daemon import QuertyAIDaemon
 
     daemon = QuertyAIDaemon()
-    print(f"✓ AI Daemon created")
-    print(f"  - Watchdog enabled: Yes")
-    print(f"  - Health monitoring: Active")
+    print("✓ AI Daemon created")
+    print("  - Watchdog enabled: Yes")
+    print("  - Health monitoring: Active")
 
     # Initialize services
-    print(f"\n✓ Initializing all services...")
+    print("\n✓ Initializing all services...")
     try:
         daemon.initialize_services()
-        print(f"✓ All services initialized successfully!")
+        print("✓ All services initialized successfully!")
 
         # Show health status
         health = daemon.get_health_status()
-        print(f"\n✓ System Health:")
+        print("\n✓ System Health:")
         print(f"  - Status: {health['status']}")
         print(
-            f"  - Services running: {len([s for s, st in health['services'].items() if st == 'ready'])}"
+            "  - Services running:"
+            f" {len([s for s, st in health['services'].items() if st == 'ready'])}"
         )
         print(f"  - Watchdog restarts: {health['watchdog_restarts']}")
 
         # List initialized services
-        print(f"\n✓ Initialized Services:")
+        print("\n✓ Initialized Services:")
         for service, status in sorted(health["services"].items()):
             print(f"  - {service}: {status}")
     except Exception as e:

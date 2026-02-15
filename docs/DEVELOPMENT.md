@@ -123,11 +123,11 @@ Example:
 def create_snapshot(name: str, description: str = "") -> Optional[Snapshot]:
     """
     Create a new system snapshot.
-    
+
     Args:
         name: Snapshot name
         description: Optional description
-        
+
     Returns:
         Created snapshot or None on failure
     """

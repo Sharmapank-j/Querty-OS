@@ -77,24 +77,24 @@ backup_partition() {
     local partition_name="$1"
     local partition_path="/dev/block/by-name/$partition_name"
     local backup_file="${BACKUP_DIR}/${partition_name}.img"
-    
+
     if [ ! -e "$partition_path" ]; then
         log_warn "Partition $partition_name not found at $partition_path"
         return 1
     fi
-    
+
     log_info "Backing up: $partition_name..."
-    
+
     # Get partition size
     local size=$(blockdev --getsize64 "$partition_path" 2>/dev/null)
     if [ -n "$size" ]; then
         local size_mb=$((size / 1024 / 1024))
         log_info "  Size: ${size_mb}MB"
     fi
-    
+
     # Perform backup
     dd if="$partition_path" of="$backup_file" bs=4M 2>/dev/null
-    
+
     if [ $? -eq 0 ]; then
         # Verify backup file
         if [ -f "$backup_file" ]; then

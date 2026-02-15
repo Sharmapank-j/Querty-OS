@@ -336,7 +336,7 @@ adb shell ls /sdcard/querty-os/
 1. Tap "Backup"
 2. Select partitions:
    ✓ Boot
-   ✓ System  
+   ✓ System
    ✓ Data
    ✓ EFS (CRITICAL!)
    ✓ Persist
@@ -528,7 +528,7 @@ fastboot -l devices
    ```
    # This works on most phones
    fastboot boot recovery.img
-   
+
    # Poco will boot to OrangeFox
    # It's temporary (not installed)
    # But you can install permanently from within OrangeFox
@@ -538,7 +538,7 @@ fastboot -l devices
    ```
    # Copy OrangeFox zip to Poco
    adb push orangefox.zip /sdcard/
-   
+
    # In OrangeFox (on Poco):
    1. Tap "Install"
    2. Select orangefox.zip
@@ -790,7 +790,7 @@ Many phone repair shops can:
 | **Time Required** | 1-2 hrs | 2-3 hrs | N/A | 1-2 hrs |
 | **Bootloader Unlock** | ❌ No** | ❌ No** | ❌ No | ✅ Yes |
 
-*Limited: May not work on all devices  
+*Limited: May not work on all devices
 **Bootloader unlock requires Mi Unlock Tool (Windows only)
 
 ### Recommended Approach
@@ -1079,10 +1079,10 @@ Thousands of users flash ROMs using only their phones. Join the community, ask q
 
 ---
 
-**Guide Version**: 1.0  
-**Last Updated**: 2026-02-10  
-**Target Device**: Poco X4 Pro 5G (veux/peux)  
-**Methods**: Rooted Phone, Termux, iPad  
+**Guide Version**: 1.0
+**Last Updated**: 2026-02-10
+**Target Device**: Poco X4 Pro 5G (veux/peux)
+**Methods**: Rooted Phone, Termux, iPad
 
 **Status**: ✅ Tested and Working
 

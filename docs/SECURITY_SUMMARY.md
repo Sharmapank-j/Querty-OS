@@ -1,8 +1,8 @@
 # Security Summary
 
-**Date:** February 10, 2026  
-**Repository:** Sharmapank-j/Querty-OS  
-**Branch:** copilot/complete-check-repo  
+**Date:** February 10, 2026
+**Repository:** Sharmapank-j/Querty-OS
+**Branch:** copilot/complete-check-repo
 **Status:** ✅ **NO SECURITY ISSUES FOUND**
 
 ---
@@ -173,6 +173,6 @@ The repository has:
 
 ---
 
-*Security Review Completed: February 10, 2026*  
-*Reviewed by: GitHub Copilot + CodeQL + Automated Tools*  
+*Security Review Completed: February 10, 2026*
+*Reviewed by: GitHub Copilot + CodeQL + Automated Tools*
 *Next Review: Recommended after major changes*

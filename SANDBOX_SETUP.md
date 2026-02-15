@@ -26,10 +26,10 @@ Querty-OS can run in multiple virtualized/sandboxed environments for safe testin
 
 ### Why Test in Sandbox?
 
-✅ **Safe Testing**: No risk to physical device  
-✅ **Easy Rollback**: Snapshots and quick resets  
-✅ **Rapid Development**: Fast iteration cycles  
-✅ **Resource Control**: Test with different configurations  
+✅ **Safe Testing**: No risk to physical device
+✅ **Easy Rollback**: Snapshots and quick resets
+✅ **Rapid Development**: Fast iteration cycles
+✅ **Resource Control**: Test with different configurations
 ✅ **CI/CD Ready**: Automated testing pipeline
 
 ---
@@ -396,11 +396,11 @@ print(mgr.suggest_partition_sizes())
 
 ### Expected Output
 
-✅ **All tests passing**  
-✅ **Priority system: AI (40%) > Android (35%) > Linux (15%) > Windows (10%)**  
-✅ **No import errors**  
-✅ **Configuration valid**  
-✅ **Scripts executable**  
+✅ **All tests passing**
+✅ **Priority system: AI (40%) > Android (35%) > Linux (15%) > Windows (10%)**
+✅ **No import errors**
+✅ **Configuration valid**
+✅ **Scripts executable**
 
 ---
 

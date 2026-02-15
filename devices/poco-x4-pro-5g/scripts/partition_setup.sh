@@ -172,16 +172,16 @@ echo ""
 if [ $DRY_RUN -eq 0 ]; then
     echo "${RED}Type 'YES I UNDERSTAND' to proceed:${NC}"
     read -r confirmation
-    
+
     if [ "$confirmation" != "YES I UNDERSTAND" ]; then
         log_info "Operation cancelled"
         exit 0
     fi
-    
+
     echo ""
     log_warn "Last chance! Type 'DESTROY DATA' to confirm:"
     read -r final_confirm
-    
+
     if [ "$final_confirm" != "DESTROY DATA" ]; then
         log_info "Operation cancelled"
         exit 0

@@ -12,31 +12,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.10'
           cache: 'pip'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
-      
+
       - name: Check code formatting with black
         run: black --check core/ tests/
-      
+
       - name: Check import sorting with isort
         run: isort --check-only core/ tests/
-      
+
       - name: Lint with flake8
         run: flake8 core/ tests/ --count --statistics
-      
+
       - name: Lint with pylint
         run: pylint core/ --fail-under=8.0
         continue-on-error: true
-      
+
       - name: Type check with mypy
         run: mypy core/
         continue-on-error: true
@@ -46,25 +46,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install bandit safety
-      
+
       - name: Security scan with bandit
         run: bandit -r core/ -f json -o bandit-report.json
         continue-on-error: true
-      
+
       - name: Check dependencies with safety
         run: safety check --json
         continue-on-error: true
-      
+
       - name: Upload security reports
         uses: actions/upload-artifact@v4
         if: always()
@@ -79,29 +79,29 @@ jobs:
     strategy:
       matrix:
         python-version: ['3.8', '3.9', '3.10', '3.11']
-    
+
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
           cache: 'pip'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
           pip install -e .
-      
+
       - name: Run unit tests
         run: pytest tests/unit/ -v --cov=core --cov-report=xml --cov-report=term
-      
+
       - name: Run integration tests
         run: pytest tests/integration/ -v
         continue-on-error: true
-      
+
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
         with:
@@ -116,23 +116,23 @@ jobs:
     needs: [lint, security, test]
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-      
+
       - name: Install build dependencies
         run: |
           python -m pip install --upgrade pip
           pip install build twine
-      
+
       - name: Build package
         run: python -m build
-      
+
       - name: Check package
         run: twine check dist/*
-      
+
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -144,17 +144,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
           python-version: '3.10'
-      
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
-      
+
       - name: Check if Sphinx docs exist
         id: check_docs
         run: |
@@ -164,12 +164,12 @@ jobs:
             echo "docs_exist=false" >> $GITHUB_OUTPUT
             echo "Sphinx configuration not found, skipping documentation build"
           fi
-      
+
       - name: Build documentation
         if: steps.check_docs.outputs.docs_exist == 'true'
         run: |
           cd docs && make html
-      
+
       - name: Upload documentation
         if: steps.check_docs.outputs.docs_exist == 'true'
         uses: actions/upload-artifact@v4

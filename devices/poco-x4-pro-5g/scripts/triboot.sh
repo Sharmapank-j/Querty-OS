@@ -86,11 +86,11 @@ check_root() {
 detect_device() {
     # Try to get device codename from various sources
     local device=$(getprop ro.product.device 2>/dev/null)
-    
+
     if [ -z "$device" ]; then
         device=$(getprop ro.build.product 2>/dev/null)
     fi
-    
+
     case "$device" in
         veux|peux)
             DEVICE_CODENAME="$device"
@@ -117,7 +117,7 @@ init_dirs() {
 get_active_slot() {
     # Try using getprop first (works in Android/recovery)
     SLOT=$(getprop ro.boot.slot_suffix 2>/dev/null | tr -d '_')
-    
+
     if [ -z "$SLOT" ]; then
         # Fallback: check bootctl
         if command -v bootctl >/dev/null 2>&1; then
@@ -131,16 +131,16 @@ get_active_slot() {
             SLOT="a"  # Default fallback
         fi
     fi
-    
+
     echo "$SLOT"
 }
 
 # Set active slot
 set_active_slot() {
     local slot="$1"
-    
+
     log_step "Setting active slot to: $slot"
-    
+
     # Try bootctl first (Android 7.0+)
     if command -v bootctl >/dev/null 2>&1; then
         case "$slot" in
@@ -148,7 +148,7 @@ set_active_slot() {
             b|B) bootctl set-active-boot-slot 1 2>/dev/null ;;
         esac
     fi
-    
+
     # Also try via setprop if available
     if command -v setprop >/dev/null 2>&1; then
         setprop ro.boot.slot_suffix "_${slot}" 2>/dev/null
@@ -159,22 +159,22 @@ set_active_slot() {
 check_image() {
     local image="$1"
     local name="$2"
-    
+
     if [ ! -f "$image" ]; then
         log_error "$name boot image not found: $image"
         log_warn "Please copy the boot image to: $image"
         return 1
     fi
-    
+
     # Verify it's a valid boot image (check for ANDROID! magic)
     if ! head -c 8 "$image" 2>/dev/null | grep -q "ANDROID!"; then
         log_warn "$name image may not be a valid Android boot image"
         log_warn "This might be a UEFI image or corrupted - proceeding anyway"
     fi
-    
+
     local size=$(ls -lh "$image" | awk '{print $5}')
     log_info "$name image size: $size"
-    
+
     return 0
 }
 
@@ -182,38 +182,38 @@ check_image() {
 flash_boot() {
     local image="$1"
     local target="$2"
-    
+
     log_step "Flashing boot image..."
     log_info "Source: $image"
     log_info "Target: $target"
-    
+
     # Verify source exists
     if [ ! -f "$image" ]; then
         log_error "Source image not found: $image"
         return 1
     fi
-    
+
     # Verify target exists
     if [ ! -e "$target" ]; then
         log_error "Target partition not found: $target"
         return 1
     fi
-    
+
     # Get image size
     local img_size=$(stat -c%s "$image" 2>/dev/null)
     local part_size=$(blockdev --getsize64 "$target" 2>/dev/null)
-    
+
     if [ -n "$img_size" ] && [ -n "$part_size" ]; then
         if [ "$img_size" -gt "$part_size" ]; then
             log_error "Image size ($img_size) exceeds partition size ($part_size)"
             return 1
         fi
     fi
-    
+
     # Flash the image
     dd if="$image" of="$target" bs=4M 2>/dev/null
     local result=$?
-    
+
     if [ $result -eq 0 ]; then
         sync
         log_info "Boot image flashed successfully"
@@ -228,16 +228,16 @@ flash_boot() {
 flash_dtbo() {
     local image="$1"
     local target="$2"
-    
+
     if [ ! -f "$image" ]; then
         log_info "No DTBO image provided, skipping"
         return 0
     fi
-    
+
     log_step "Flashing DTBO..."
     dd if="$image" of="$target" bs=4M 2>/dev/null
     local result=$?
-    
+
     if [ $result -eq 0 ]; then
         sync
         log_info "DTBO flashed successfully"
@@ -251,20 +251,20 @@ flash_dtbo() {
 # Disable AVB verification
 disable_avb() {
     log_step "Ensuring AVB is disabled..."
-    
+
     # Poco X4 Pro 5G has both vbmeta and vbmeta_system partitions
     for vbmeta in "$VBMETA_A" "$VBMETA_B" "$VBMETA_SYSTEM_A" "$VBMETA_SYSTEM_B"; do
         if [ -e "$vbmeta" ]; then
             # Read current AVB flags
             current=$(dd if="$vbmeta" bs=1 skip=123 count=1 2>/dev/null | od -An -tx1 | tr -d ' ')
-            
+
             if [ "$current" != "02" ] && [ "$current" != "03" ]; then
                 log_warn "AVB may not be fully disabled on $vbmeta (current: $current)"
                 log_warn "Consider flashing vbmeta-disabled.img"
             fi
         fi
     done
-    
+
     log_info "AVB check complete"
 }
 
@@ -288,15 +288,15 @@ get_state() {
 backup_current_boot() {
     local slot=$(get_active_slot)
     local backup_file="${IMAGES_DIR}/boot_backup_$(date +%Y%m%d_%H%M%S).img"
-    
+
     log_step "Backing up current boot image..."
-    
+
     case "$slot" in
         a|A) dd if="$BOOT_A" of="$backup_file" bs=4M 2>/dev/null ;;
         b|B) dd if="$BOOT_B" of="$backup_file" bs=4M 2>/dev/null ;;
         *)   dd if="$BOOT_A" of="$backup_file" bs=4M 2>/dev/null ;;
     esac
-    
+
     if [ $? -eq 0 ]; then
         log_info "Backup saved: $backup_file"
         return 0
@@ -314,7 +314,7 @@ boot_android() {
     print_banner
     log_info "Preparing to boot: ${GREEN}Android${NC}"
     echo ""
-    
+
     # Check image
     if ! check_image "$BOOT_ANDROID" "Android"; then
         log_error "Cannot proceed without Android boot image"
@@ -325,13 +325,13 @@ boot_android() {
         echo "  cp /sdcard/boot_android.img ${BOOT_ANDROID}"
         return 1
     fi
-    
+
     # Get target slot (restore last used Android slot if available)
     local slot="a"
     if [ -f "$LAST_ANDROID_SLOT" ]; then
         slot=$(cat "$LAST_ANDROID_SLOT")
     fi
-    
+
     local boot_target="$BOOT_A"
     local dtbo_target="$DTBO_A"
     case "$slot" in
@@ -340,33 +340,33 @@ boot_android() {
             dtbo_target="$DTBO_B"
             ;;
     esac
-    
+
     log_info "Using slot: $slot"
-    
+
     # Flash boot
     if ! flash_boot "$BOOT_ANDROID" "$boot_target"; then
         return 1
     fi
-    
+
     # Flash DTBO if exists
     if [ -f "$DTBO_ANDROID" ]; then
         flash_dtbo "$DTBO_ANDROID" "$dtbo_target"
     fi
-    
+
     # Set active slot
     set_active_slot "$slot"
-    
+
     # Ensure AVB is handled
     disable_avb
-    
+
     # Save state
     save_state "android"
-    
+
     echo ""
     log_info "${GREEN}Ready to boot Android!${NC}"
     log_info "Rebooting in 3 seconds..."
     sleep 3
-    
+
     reboot
 }
 
@@ -374,11 +374,11 @@ boot_windows() {
     print_banner
     log_info "Preparing to boot: ${BLUE}Windows ARM${NC}"
     echo ""
-    
+
     log_warn "${YELLOW}WARNING:${NC} Windows ARM on Snapdragon 695 is experimental!"
     log_warn "Ensure you have the correct UEFI build for veux/peux"
     echo ""
-    
+
     # Check image
     if ! check_image "$BOOT_WINDOWS" "Windows UEFI"; then
         log_error "Cannot proceed without Windows UEFI boot image"
@@ -389,37 +389,37 @@ boot_windows() {
         echo "  ${BOOT_WINDOWS}"
         return 1
     fi
-    
+
     # Save current Android slot before switching
     local current_slot=$(get_active_slot)
     echo "$current_slot" > "$LAST_ANDROID_SLOT"
     log_info "Saved Android slot: $current_slot"
-    
+
     # Windows typically uses slot A
     local boot_target="$BOOT_A"
-    
+
     # Flash UEFI boot image
     if ! flash_boot "$BOOT_WINDOWS" "$boot_target"; then
         return 1
     fi
-    
+
     # Windows doesn't use Android DTBO - no need to flash
-    
+
     # Set slot A active for Windows
     set_active_slot "a"
-    
+
     # Disable AVB
     disable_avb
-    
+
     # Save state
     save_state "windows"
-    
+
     echo ""
     log_info "${BLUE}Ready to boot Windows ARM!${NC}"
     log_warn "First boot may take several minutes"
     log_info "Rebooting in 5 seconds..."
     sleep 5
-    
+
     reboot
 }
 
@@ -427,7 +427,7 @@ boot_linux() {
     print_banner
     log_info "Preparing to boot: ${YELLOW}Linux${NC}"
     echo ""
-    
+
     # Check image
     if ! check_image "$BOOT_LINUX" "Linux"; then
         log_error "Cannot proceed without Linux boot image"
@@ -438,41 +438,41 @@ boot_linux() {
         echo "  ${BOOT_LINUX}"
         return 1
     fi
-    
+
     # Save current Android slot before switching
     local current_slot=$(get_active_slot)
     echo "$current_slot" > "$LAST_ANDROID_SLOT"
     log_info "Saved Android slot: $current_slot"
-    
+
     # Use slot B for Linux to keep Android on slot A
     local boot_target="$BOOT_B"
     local dtbo_target="$DTBO_B"
-    
+
     # Flash boot
     if ! flash_boot "$BOOT_LINUX" "$boot_target"; then
         return 1
     fi
-    
+
     # Flash DTBO if exists
     if [ -f "$DTBO_LINUX" ]; then
         flash_dtbo "$DTBO_LINUX" "$dtbo_target"
     fi
-    
+
     # Set slot B active for Linux
     set_active_slot "b"
-    
+
     # Disable AVB
     disable_avb
-    
+
     # Save state
     save_state "linux"
-    
+
     echo ""
     log_info "${YELLOW}Ready to boot Linux!${NC}"
     log_warn "Ensure your Linux partition is properly set up"
     log_info "Rebooting in 3 seconds..."
     sleep 3
-    
+
     reboot
 }
 
@@ -482,12 +482,12 @@ boot_linux() {
 
 show_menu() {
     print_banner
-    
+
     local current=$(get_state)
     log_info "Current OS: ${CYAN}$current${NC}"
     local slot=$(get_active_slot)
     log_info "Active slot: ${CYAN}$slot${NC}"
-    
+
     echo ""
     echo "${CYAN}Available Commands:${NC}"
     echo ""
@@ -505,29 +505,29 @@ show_status() {
     print_banner
     log_info "System Status"
     echo ""
-    
+
     detect_device
-    
+
     local current=$(get_state)
     local slot=$(get_active_slot)
-    
+
     echo "${CYAN}═══════════════════════════════════════════════════════${NC}"
     echo "${GREEN}Current OS:${NC}    $current"
     echo "${GREEN}Active Slot:${NC}   $slot"
     echo "${CYAN}═══════════════════════════════════════════════════════${NC}"
     echo ""
-    
+
     echo "${YELLOW}Boot Images:${NC}"
     [ -f "$BOOT_ANDROID" ] && echo "  ✓ Android:  $(ls -lh $BOOT_ANDROID | awk '{print $5}')" || echo "  ✗ Android:  Not found"
     [ -f "$BOOT_WINDOWS" ] && echo "  ✓ Windows:  $(ls -lh $BOOT_WINDOWS | awk '{print $5}')" || echo "  ✗ Windows:  Not found"
     [ -f "$BOOT_LINUX" ] && echo "  ✓ Linux:    $(ls -lh $BOOT_LINUX | awk '{print $5}')" || echo "  ✗ Linux:    Not found"
     echo ""
-    
+
     echo "${YELLOW}DTBO Images:${NC}"
     [ -f "$DTBO_ANDROID" ] && echo "  ✓ Android:  $(ls -lh $DTBO_ANDROID | awk '{print $5}')" || echo "  - Android:  Not found (optional)"
     [ -f "$DTBO_LINUX" ] && echo "  ✓ Linux:    $(ls -lh $DTBO_LINUX | awk '{print $5}')" || echo "  - Linux:    Not found (optional)"
     echo ""
-    
+
     echo "${YELLOW}Partitions:${NC}"
     [ -e "$BOOT_A" ] && echo "  ✓ boot_a exists" || echo "  ✗ boot_a missing"
     [ -e "$BOOT_B" ] && echo "  ✓ boot_b exists" || echo "  ✗ boot_b missing"
@@ -568,10 +568,10 @@ show_help() {
 main() {
     # Check root
     check_root
-    
+
     # Initialize directories
     init_dirs
-    
+
     # Parse command
     case "$1" in
         android)

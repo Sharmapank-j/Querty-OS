@@ -20,7 +20,7 @@ jobs:
     name: Analyze Python Code
     runs-on: ubuntu-latest
     timeout-minutes: 360
-    
+
     strategy:
       fail-fast: false
       matrix:
@@ -39,7 +39,7 @@ jobs:
         tools: latest
         # Queries to run
         queries: security-extended,security-and-quality
-        
+
     - name: Autobuild
       uses: github/codeql-action/autobuild@v3
 

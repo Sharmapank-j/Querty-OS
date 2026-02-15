@@ -12,7 +12,7 @@ From the problem statement: **"Check if the whole project can run in sandbox vir
 
 1. **Sandbox/Virtual Environment Support** ✅
    - Docker containerization (production + development)
-   - QEMU/KVM full system virtualization  
+   - QEMU/KVM full system virtualization
    - Android Emulator integration
    - Comprehensive testing in all environments
 

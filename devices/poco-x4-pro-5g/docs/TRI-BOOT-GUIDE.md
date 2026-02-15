@@ -252,12 +252,12 @@ Verify partitions in TWRP:
    # Format ESP and Windows partitions
    mkfs.vfat -F 32 /dev/block/by-name/esp
    # NTFS formatting may require Windows or special tools
-   
+
    # Mount partitions
    mkdir -p /mnt/esp /mnt/win
    mount /dev/block/by-name/esp /mnt/esp
    mount /dev/block/by-name/win /mnt/win
-   
+
    # Copy UEFI files to ESP
    # Copy Windows ARM files to win partition
    # (Follow Renegade Project instructions)
@@ -283,10 +283,10 @@ If postmarketOS or Ubuntu Touch is available:
    ```bash
    mkdir -p /mnt/linux
    mount /dev/block/by-name/linux /mnt/linux
-   
+
    # Extract rootfs
    tar -xzf postmarketos-veux.tar.gz -C /mnt/linux
-   
+
    # Or use dd for image files
    dd if=ubuntu-touch-veux.img of=/dev/block/by-name/linux bs=4M
    ```

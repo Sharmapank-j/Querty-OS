@@ -5,7 +5,7 @@
 ### Critical Risks (Can Brick Device)
 
 #### 1. Modem Partition Damage ⚠️⚠️⚠️
-**Risk Level**: CRITICAL  
+**Risk Level**: CRITICAL
 **Impact**: Permanent loss of cellular connectivity
 
 **What Can Go Wrong**:
@@ -35,7 +35,7 @@ dd if=/sdcard/backup/fsc.img of=/dev/block/by-name/fsc
 ---
 
 #### 2. Boot Partition Corruption ⚠️⚠️
-**Risk Level**: HIGH  
+**Risk Level**: HIGH
 **Impact**: Device won't boot, stuck at logo
 
 **What Can Go Wrong**:
@@ -62,7 +62,7 @@ fastboot flash boot boot_stock.img
 ---
 
 #### 3. Partition Table Corruption ⚠️⚠️⚠️
-**Risk Level**: CRITICAL  
+**Risk Level**: CRITICAL
 **Impact**: Device completely unbootable
 
 **What Can Go Wrong**:
@@ -88,7 +88,7 @@ fastboot flash boot boot_stock.img
 ### High Risks (Recoverable with Effort)
 
 #### 4. TWRP/Recovery Access Loss ⚠️
-**Risk Level**: MEDIUM-HIGH  
+**Risk Level**: MEDIUM-HIGH
 **Impact**: Can't access TWRP to fix issues
 
 **What Can Go Wrong**:
@@ -111,7 +111,7 @@ fastboot boot twrp.img  # Boot without flashing
 ---
 
 #### 5. Data Loss ⚠️
-**Risk Level**: CERTAIN during setup  
+**Risk Level**: CERTAIN during setup
 **Impact**: All personal data erased
 
 **What Will Be Lost**:
@@ -137,7 +137,7 @@ fastboot boot twrp.img  # Boot without flashing
 ### Medium Risks (Annoying but Fixable)
 
 #### 6. AVB (Verified Boot) Issues ⚠️
-**Risk Level**: MEDIUM  
+**Risk Level**: MEDIUM
 **Impact**: Boot warnings, potential boot failure
 
 **What Can Go Wrong**:
@@ -160,7 +160,7 @@ fastboot flash vbmeta_system vbmeta-disabled.img --disable-verity --disable-veri
 ---
 
 #### 7. Storage Space Issues ⚠️
-**Risk Level**: LOW-MEDIUM  
+**Risk Level**: LOW-MEDIUM
 **Impact**: Not enough space for all OSes
 
 **What Can Go Wrong**:
@@ -183,7 +183,7 @@ fastboot flash vbmeta_system vbmeta-disabled.img --disable-verity --disable-veri
 ### Low Risks (Cosmetic Issues)
 
 #### 8. Boot Slot Confusion
-**Risk Level**: LOW  
+**Risk Level**: LOW
 **Impact**: Wrong OS boots occasionally
 
 **Prevention**:
