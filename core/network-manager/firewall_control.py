@@ -360,8 +360,8 @@ class FirewallControl:
         for rule_id in rule_ids:
             try:
                 self.delete_rule(rule_id)
-            except NetworkError:
-                pass
+            except NetworkError as e:
+                logger.warning(f"Failed to delete firewall rule '{rule_id}' for app '{app_name}': {e}")
 
     def get_app_policy(self, app_name: str) -> Optional[AppNetworkPolicy]:
         """
