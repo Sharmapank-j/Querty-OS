@@ -138,6 +138,17 @@ bash -n devices/poco-x4-pro-5g/scripts/partition_setup.sh
 
 ## Phase 2: Device Preparation
 
+### 2.0 Fresh MIUI/HyperOS Verification (Recommended)
+
+From your computer, run the automated verification helper before unlocking/flashing:
+
+```bash
+cd /path/to/Querty-OS
+bash devices/poco-x4-pro-5g/scripts/fresh_mirom_setup.sh
+```
+
+This validates required repository files, shell script syntax, host tools (`adb`, `fastboot`, `python3`), and attached device identity (`veux`/`peux`).
+
 ### 2.1 Enable Developer Options
 
 1. Go to **Settings** > **About phone**
