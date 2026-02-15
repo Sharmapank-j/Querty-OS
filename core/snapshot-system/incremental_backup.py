@@ -220,9 +220,6 @@ class IncrementalBackup:
                     current_index = {k: v for k, v in current_index.items() if pattern not in k}
 
             # Determine changes
-            new_files = set()
-            modified_files = set()
-            deleted_files = set()
 
             if parent_backup_id and parent_backup_id in self.manifests:
                 parent_manifest = self.manifests[parent_backup_id]
@@ -233,6 +230,8 @@ class IncrementalBackup:
             else:
                 # Full backup - all files are new
                 new_files = set(current_index.keys())
+                modified_files = set()
+                deleted_files = set()
                 logger.info("Creating full backup (no parent)")
 
             # Copy changed files
