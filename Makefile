@@ -35,7 +35,7 @@ install:
 
 install-dev:
 	$(PIP) install -r requirements-dev.txt
-	$(PIP) install -e .
+	$(PIP) install --no-build-isolation -e .
 
 test:
 	$(PYTEST) tests/ -v

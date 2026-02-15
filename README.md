@@ -153,11 +153,31 @@ Safety-first update system:
 
 ## Installation
 
-*Installation instructions will be added as the system is developed.*
+### Local development install
+
+```bash
+python3 -m pip install -r requirements.txt
+python3 -m pip install --no-build-isolation -e .
+```
+
+### Poco X4 Pro (fresh MIUI/HyperOS) pre-install verification
+
+Run the host-side verifier to confirm files, tools, and device state before flashing steps:
+
+```bash
+bash devices/poco-x4-pro-5g/scripts/fresh_mirom_setup.sh
+```
+
+Then continue with the full deployment playbook in [POCO_X4_PRO_DEPLOYMENT.md](POCO_X4_PRO_DEPLOYMENT.md).
 
 ## Usage
 
-*Usage instructions will be added as the system is developed.*
+Use the interactive dashboard and daemon entrypoint:
+
+```bash
+python3 scripts/dashboard.py
+querty-daemon
+```
 
 ## Development
 
