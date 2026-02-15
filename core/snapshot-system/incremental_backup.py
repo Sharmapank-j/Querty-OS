@@ -392,7 +392,6 @@ class IncrementalBackup:
             # Restore in order (oldest to newest)
             for backup_id_to_restore in restore_chain:
                 manifest = self.manifests[backup_id_to_restore]
-                backup_dir = Path(manifest.backup_dir)
 
                 # Copy all backed up files
                 for file_metadata in manifest.files.values():
