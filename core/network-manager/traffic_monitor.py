@@ -12,8 +12,6 @@ from enum import Enum
 from pathlib import Path
 from typing import Deque, Dict, List, Optional, Tuple
 
-from core.exceptions import NetworkError
-
 logger = logging.getLogger(__name__)
 
 
