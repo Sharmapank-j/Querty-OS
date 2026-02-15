@@ -408,16 +408,9 @@ class VPNManager:
                     connection.process_id,
                     exc,
                 )
-            except Exception:
-                pass
 
         # Alternative: kill all openvpn processes (not recommended in production)
-        except Exception as exc:
-            logger.debug("Failed to run 'killall openvpn': %s", exc)
-        except (KeyboardInterrupt, SystemExit):
-            raise
-        except Exception:
-            pass
+        # subprocess.run(["killall", "openvpn"], check=False, timeout=5)
 
     def _disconnect_wireguard(self, connection: VPNConnection) -> None:
         """
