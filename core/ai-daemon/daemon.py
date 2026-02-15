@@ -6,6 +6,7 @@ Enhanced with watchdog, auto-restart, and health monitoring.
 """
 
 import logging
+import os
 import signal
 import sys
 import threading
@@ -13,14 +14,20 @@ import time
 from datetime import datetime
 from typing import Dict
 
-# Configure logging
+# Configure logging with fallback for permission errors
+log_handlers = [logging.StreamHandler(sys.stdout)]
+try:
+    log_handlers.append(logging.FileHandler("/var/log/querty-ai-daemon.log"))
+except (PermissionError, FileNotFoundError):
+    # Fallback to user directory if /var/log is not writable
+    log_dir = os.path.expanduser("~/.querty-os/logs")
+    os.makedirs(log_dir, exist_ok=True)
+    log_handlers.append(logging.FileHandler(os.path.join(log_dir, "querty-ai-daemon.log")))
+
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-    handlers=[
-        logging.FileHandler("/var/log/querty-ai-daemon.log"),
-        logging.StreamHandler(sys.stdout),
-    ],
+    handlers=log_handlers,
 )
 
 logger = logging.getLogger("querty-ai-daemon")
