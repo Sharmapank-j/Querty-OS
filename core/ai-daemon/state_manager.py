@@ -6,7 +6,6 @@ Manages system state persistence using JSON file storage with atomic writes.
 
 import json
 import logging
-import os
 import shutil
 import threading
 from datetime import datetime
