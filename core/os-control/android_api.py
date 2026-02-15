@@ -110,7 +110,7 @@ class AndroidAPI:
                 error_code="ADB_COMMAND_FAILED",
                 details={"stdout": e.stdout, "stderr": e.stderr, "returncode": e.returncode},
             )
-        except subprocess.TimeoutExpired as e:
+        except subprocess.TimeoutExpired:
             raise AndroidControlError(
                 f"ADB command timed out: {' '.join(cmd)}",
                 error_code="ADB_TIMEOUT",

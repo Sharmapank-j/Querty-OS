@@ -103,7 +103,7 @@ class LinuxChroot:
                 error_code="COMMAND_TIMEOUT",
                 details={"timeout": timeout},
             )
-        except FileNotFoundError as e:
+        except FileNotFoundError:
             raise LinuxControlError(
                 f"Command not found: {cmd[0]}", error_code="COMMAND_NOT_FOUND", details={"cmd": cmd}
             )
