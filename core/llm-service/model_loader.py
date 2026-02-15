@@ -5,7 +5,6 @@ Provides model loading interface with support for different model formats.
 """
 
 import logging
-import os
 from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
