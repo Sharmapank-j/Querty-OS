@@ -298,4 +298,16 @@ class ServiceManager:
         Returns:
             Dictionary mapping service names to status information
         """
-        return {name: self.get_service_status(name) for name in self.services}
+        return {
+            name: {
+                "name": name,
+                "state": service.state.value,
+                "uptime": service.get_uptime(),
+                "start_time": service.start_time.isoformat() if service.start_time else None,
+                "last_health_check": (
+                    service.last_health_check.isoformat() if service.last_health_check else None
+                ),
+                "error_message": service.error_message,
+            }
+            for name, service in self.services.items()
+        }
