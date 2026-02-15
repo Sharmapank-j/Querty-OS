@@ -138,7 +138,10 @@ class AndroidAPI:
             CompletedProcess instance
         """
         if self.use_root:
-            command = f"su -c '{command}'"
+            import shlex
+
+            # Properly escape the command for use in su -c
+            command = f"su -c {shlex.quote(command)}"
 
         return self._run_adb_command(["shell", command], check=check, timeout=timeout)
 

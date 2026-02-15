@@ -226,13 +226,21 @@ class FirewallControl:
 
         try:
             # Delete IPv4 rule
-            self._run_iptables(args, check=False)
+            result = self._run_iptables(args, check=False)
+            if result.returncode != 0:
+                raise NetworkError(
+                    f"Failed to delete rule {rule_id}",
+                    error_code="FIREWALL_DELETE_FAILED",
+                )
             logger.info(f"Deleted firewall rule: {rule_id}")
 
             # Delete IPv6 rule if requested
             if apply_ipv6 and self._ip6tables_cmd:
-                self._run_iptables(args, ipv6=True, check=False)
-                logger.info(f"Deleted IPv6 firewall rule: {rule_id}")
+                result_v6 = self._run_iptables(args, ipv6=True, check=False)
+                if result_v6.returncode != 0:
+                    logger.warning(f"Failed to delete IPv6 rule {rule_id}")
+                else:
+                    logger.info(f"Deleted IPv6 firewall rule: {rule_id}")
 
             del self.rules[rule_id]
             return True
@@ -361,7 +369,9 @@ class FirewallControl:
             try:
                 self.delete_rule(rule_id)
             except NetworkError as e:
-                logger.warning(f"Failed to delete firewall rule '{rule_id}' for app '{app_name}': {e}")
+                logger.warning(
+                    f"Failed to delete firewall rule '{rule_id}' for app '{app_name}': {e}"
+                )
 
     def get_app_policy(self, app_name: str) -> Optional[AppNetworkPolicy]:
         """
