@@ -284,7 +284,7 @@ class VPNManager:
             cmd.extend(["--auth-user-pass", str(auth_file)])
 
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=10)
+            subprocess.run(cmd, capture_output=True, text=True, check=True, timeout=10)
             connection.state = VPNState.CONNECTING
             logger.info(f"Started OpenVPN connection: {config.name}")
 
