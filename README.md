@@ -7,6 +7,7 @@ Querty-OS is an Android-based AI-first system layer (not a ROM) where a local ad
 ## 📋 Quick Links
 
 - **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
+- **[Termux Setup Guide](TERMUX_SETUP.md)** - Development setup for Android Termux users
 - **[Sandbox Setup](SANDBOX_SETUP.md)** - Test in virtual environments (Docker, QEMU, Android Emulator)
 - **[Device Deployment](POCO_X4_PRO_DEPLOYMENT.md)** - Install on Poco X4 Pro 5G
 - **[Quick Reference](SETUP_QUICK_REFERENCE.md)** - All commands in one place
@@ -47,15 +48,41 @@ Querty-OS/
 
 ## 🚀 Getting Started
 
+### For Termux Users (Android)
+
+If you're developing on Android using Termux, follow our dedicated guide:
+
+**[TERMUX_SETUP.md](TERMUX_SETUP.md)** - Complete Termux setup with copy-paste commands
+
+Quick Termux setup:
+```bash
+# Install dependencies
+pkg update && pkg upgrade -y
+pkg install -y python git make
+
+# Clone and setup
+git clone https://github.com/Sharmapank-j/Querty-OS.git
+cd Querty-OS
+
+# Install dev dependencies (REQUIRED before running tests!)
+make install-dev
+
+# Run tests
+make test
+```
+
 ### Test in Sandbox First (Highly Recommended)
+
+For desktop/laptop development:
 
 ```bash
 # Clone repository
 git clone https://github.com/Sharmapank-j/Querty-OS.git
 cd Querty-OS
 
-# Install dependencies
-pip3 install -r requirements.txt
+# Install development dependencies (REQUIRED!)
+make install-dev
+# Or manually: pip3 install -r requirements-dev.txt && pip3 install -e .
 
 # Run comprehensive sandbox tests
 bash virtualization/sandbox/test-sandbox.sh
