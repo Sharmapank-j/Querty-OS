@@ -4,11 +4,7 @@ Unit tests for Querty-OS priority management system.
 
 import pytest
 
-from core.priority import (
-    ResourcePriority,
-    StoragePriorityManager,
-    SystemPriority,
-)
+from core.priority import ResourcePriority, StoragePriorityManager, SystemPriority
 
 
 class TestSystemPriority:

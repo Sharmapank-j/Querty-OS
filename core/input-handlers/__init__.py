@@ -1,12 +1,6 @@
 """Querty-OS Input Handlers Package"""
 
-from .input_fusion import (
-    FusedResult,
-    FusionStrategy,
-    InputFusion,
-    InputModality,
-    InputResult,
-)
+from .input_fusion import FusedResult, FusionStrategy, InputFusion, InputModality, InputResult
 from .input_handlers import (
     CameraInputHandler,
     InputHandler,
