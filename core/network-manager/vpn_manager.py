@@ -402,13 +402,17 @@ class VPNManager:
         if connection.process_id:
             try:
                 subprocess.run(["kill", str(connection.process_id)], check=False, timeout=5)
-            except:
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except Exception:
                 pass
 
         # Alternative: kill all openvpn processes (not recommended in production)
         try:
             subprocess.run(["killall", "openvpn"], check=False, timeout=5)
-        except:
+        except (KeyboardInterrupt, SystemExit):
+            raise
+        except Exception:
             pass
 
     def _disconnect_wireguard(self, connection: VPNConnection) -> None:
@@ -427,7 +431,9 @@ class VPNManager:
                     capture_output=True,
                     timeout=10,
                 )
-            except:
+            except (KeyboardInterrupt, SystemExit):
+                raise
+            except Exception:
                 pass
 
     def get_connection(self, name: str) -> Optional[VPNConnection]:
