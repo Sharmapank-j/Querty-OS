@@ -4,7 +4,6 @@ Provides real-time and historical network usage tracking.
 """
 
 import logging
-import os
 import time
 from collections import defaultdict, deque
 from dataclasses import dataclass, field
