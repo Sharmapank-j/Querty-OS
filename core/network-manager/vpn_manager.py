@@ -402,14 +402,18 @@ class VPNManager:
         if connection.process_id:
             try:
                 subprocess.run(["kill", str(connection.process_id)], check=False, timeout=5)
-            except (KeyboardInterrupt, SystemExit):
-                raise
+            except Exception as exc:
+                logger.debug(
+                    "Failed to kill OpenVPN process %s: %s",
+                    connection.process_id,
+                    exc,
+                )
             except Exception:
                 pass
 
         # Alternative: kill all openvpn processes (not recommended in production)
-        try:
-            subprocess.run(["killall", "openvpn"], check=False, timeout=5)
+        except Exception as exc:
+            logger.debug("Failed to run 'killall openvpn': %s", exc)
         except (KeyboardInterrupt, SystemExit):
             raise
         except Exception:
@@ -427,8 +431,12 @@ class VPNManager:
             try:
                 subprocess.run(
                     ["wg-quick", "down", config.config_file],
-                    check=False,
-                    capture_output=True,
+            except Exception as exc:
+                logger.debug(
+                    "Failed to bring down WireGuard interface with config %s: %s",
+                    config.config_file,
+                    exc,
+                )
                     timeout=10,
                 )
             except (KeyboardInterrupt, SystemExit):
