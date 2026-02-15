@@ -31,6 +31,7 @@ testpaths = ["tests"]
 python_files = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
+norecursedirs = ["tests/fixtures"]
 addopts = [
     "-ra",
     "--strict-markers",

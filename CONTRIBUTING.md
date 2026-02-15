@@ -163,14 +163,14 @@ Example:
 def function_name(param1: str, param2: int) -> bool:
     """
     Brief description of function.
-    
+
     Args:
         param1: Description of param1
         param2: Description of param2
-        
+
     Returns:
         Description of return value
-        
+
     Raises:
         ExceptionType: When this exception occurs
     """
@@ -184,7 +184,7 @@ def function_name(param1: str, param2: int) -> bool:
 - Example:
   ```python
   from typing import List, Dict, Optional
-  
+
   def process_data(items: List[str], config: Dict[str, Any]) -> Optional[str]:
       pass
   ```
@@ -197,7 +197,7 @@ def function_name(param1: str, param2: int) -> bool:
 - Example:
   ```python
   from core.exceptions import AIServiceError
-  
+
   try:
       result = process_llm_request()
   except Exception as e:

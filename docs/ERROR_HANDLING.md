@@ -87,7 +87,7 @@ def initialize_service(config):
         service.start()
         logger.info("Service initialized successfully")
         return service
-        
+
     except Exception as e:
         logger.error(f"Failed to initialize service: {e}", exc_info=True)
         raise ServiceInitializationError(
@@ -110,7 +110,7 @@ from core.exceptions import PriorityViolationError
 def allocate_resource(requester_priority: SystemPriority, amount: int):
     """Allocate resource respecting priority."""
     rp = ResourcePriority()
-    
+
     # Check if allocation violates priority rules
     if not rp.can_allocate(requester_priority, amount):
         raise PriorityViolationError(
@@ -122,7 +122,7 @@ def allocate_resource(requester_priority: SystemPriority, amount: int):
                 "reason": "Insufficient resources for priority level"
             }
         )
-    
+
     # Perform allocation
     return perform_allocation(amount)
 ```
@@ -146,7 +146,7 @@ def retry_with_backoff(max_retries=3, base_delay=1, max_delay=60):
                     retries += 1
                     if retries >= max_retries:
                         raise
-                    
+
                     delay = min(base_delay * (2 ** (retries - 1)), max_delay)
                     logger.warning(
                         f"Retry {retries}/{max_retries} after {delay}s: {e}"
@@ -174,11 +174,11 @@ def managed_service(service_name):
         logger.info(f"Starting {service_name}")
         service = initialize_service(service_name)
         yield service
-        
+
     except Exception as e:
         logger.error(f"Error in {service_name}: {e}")
         raise
-        
+
     finally:
         if service:
             logger.info(f"Stopping {service_name}")
@@ -221,20 +221,20 @@ error_report = {
 ```python
 class SelfHealingService:
     """Service with self-healing capabilities."""
-    
+
     def __init__(self):
         self.failure_count = 0
         self.max_failures = 3
-    
+
     def execute(self, task):
         """Execute task with self-healing."""
         try:
             return self._do_execute(task)
-            
+
         except Exception as e:
             self.failure_count += 1
             logger.error(f"Task failed ({self.failure_count}/{self.max_failures}): {e}")
-            
+
             if self.failure_count < self.max_failures:
                 # Attempt self-healing
                 self.heal()
@@ -242,7 +242,7 @@ class SelfHealingService:
             else:
                 # Give up and escalate
                 raise
-    
+
     def heal(self):
         """Attempt to heal service."""
         logger.info("Attempting self-healing...")
@@ -317,18 +317,18 @@ request_id = ContextVar('request_id', default=None)
 def process_request(req_id, data):
     """Process request with context."""
     request_id.set(req_id)
-    
+
     logger.info(
         "processing_request",
         request_id=request_id.get(),
         data_size=len(data)
     )
-    
+
     try:
         result = process(data)
         logger.info("request_completed", request_id=request_id.get())
         return result
-        
+
     except Exception as e:
         logger.error(
             "request_failed",
@@ -345,7 +345,7 @@ def process_request(req_id, data):
 ```python
 class ErrorFeedbackCollector:
     """Collect user feedback on errors for AI learning."""
-    
+
     def report_error(self, error, user_feedback=None):
         """Report error with optional user feedback."""
         report = {
@@ -354,10 +354,10 @@ class ErrorFeedbackCollector:
             "user_feedback": user_feedback,
             "resolved": False,
         }
-        
+
         # Store for AI analysis
         self.store_feedback(report)
-        
+
         # If user provided feedback, use it for improvement
         if user_feedback:
             self.learn_from_feedback(report)
@@ -370,19 +370,19 @@ def interactive_error_handler(error):
     """Handle error with user interaction."""
     print(f"Error occurred: {error.message}")
     print(f"Error code: {error.error_code}")
-    
+
     # Suggest fixes based on error type
     suggestions = get_fix_suggestions(error)
-    
+
     print("\nSuggested fixes:")
     for i, suggestion in enumerate(suggestions, 1):
         print(f"{i}. {suggestion}")
-    
+
     choice = input("\nSelect fix (1-{}) or 'c' to cancel: ".format(len(suggestions)))
-    
+
     if choice.isdigit():
         apply_fix(suggestions[int(choice) - 1])
-    
+
     return None
 ```
 
@@ -395,7 +395,7 @@ def test_llm_load_error():
     """Test LLM load error handling."""
     with pytest.raises(LLMLoadError) as exc_info:
         load_invalid_model()
-    
+
     assert exc_info.value.error_code == "LLM_001"
     assert "not found" in str(exc_info.value)
 ```
@@ -406,12 +406,12 @@ def test_llm_load_error():
 def test_service_recovery():
     """Test service recovers from failure."""
     service = SelfHealingService()
-    
+
     # Simulate failure
     with patch.object(service, '_do_execute', side_effect=Exception("Test error")):
         # First few attempts should trigger healing
         service.failure_count = 0
-        
+
         # Should recover after healing
         with patch.object(service, 'heal'):
             # Test recovery logic
@@ -424,13 +424,13 @@ def test_service_recovery():
 def test_priority_enforcement():
     """Test priority system is enforced."""
     rp = ResourcePriority()
-    
+
     # AI should preempt Windows
     assert rp.should_preempt(
         SystemPriority.WINDOWS,
         SystemPriority.AI
     ) is True
-    
+
     # Windows should not preempt AI
     assert rp.should_preempt(
         SystemPriority.AI,

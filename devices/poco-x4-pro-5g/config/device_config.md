@@ -7,7 +7,7 @@ device:
   name: "Poco X4 Pro 5G"
   codename: ["veux", "peux"]
   manufacturer: "Xiaomi"
-  
+
 specs:
   soc: "Qualcomm Snapdragon 695 5G"
   soc_model: "SM6375"
@@ -17,12 +17,12 @@ specs:
   storage: ["128GB", "256GB"]
   storage_type: "UFS 2.2"
   display: "6.67\" AMOLED, 1080x2400, 120Hz"
-  
+
 android:
   launch_version: "Android 11"
   current_version: "Android 13"
   miui_version: ["MIUI 13", "MIUI 14"]
-  
+
 bootloader:
   type: "Qualcomm Secure Boot"
   slots: "A/B"
@@ -253,7 +253,7 @@ Linux (Native Boot, NOT proot):
   ✓ Arch Linux ARM (May work)
   ✓ Debian ARM64 (May work)
   ✓ Generic ARM64 distros (May work)
-  
+
   Note: Full kernel boot, NOT containerized
 ```
 

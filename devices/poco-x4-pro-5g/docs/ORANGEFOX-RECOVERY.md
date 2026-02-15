@@ -168,7 +168,7 @@ ls -lh recovery.img
    ```bash
    # Method A: Via ADB
    adb reboot bootloader
-   
+
    # Method B: Manual (phone powered off)
    # Hold Volume Down + Power button until Fastboot appears
    ```
@@ -185,7 +185,7 @@ ls -lh recovery.img
    ```bash
    # Flash recovery to recovery partition
    fastboot flash recovery recovery.img
-   
+
    # Wait for "OKAY" message
    # Output should show:
    # Sending 'recovery' (XXXXX KB)    OKAY
@@ -198,7 +198,7 @@ ls -lh recovery.img
    ```bash
    # Method A: Via fastboot command
    fastboot reboot recovery
-   
+
    # Method B: Manual
    # Hold Volume Up + Power button until OrangeFox logo appears
    ```
@@ -293,7 +293,7 @@ fastboot boot recovery.img
    # From computer
    adb devices
    # Should show device in recovery mode
-   
+
    # Test shell access
    adb shell
    # Should get root shell in OrangeFox
@@ -531,7 +531,7 @@ OrangeFox Full Backup:
    ```bash
    # Pull all backups to computer
    adb pull /sdcard/Fox/Backups/ ~/poco-x4-backups/
-   
+
    # Verify integrity
    ls -lh ~/poco-x4-backups/
    ```
@@ -572,7 +572,7 @@ ls -la */boot.emmc.win*
    ```bash
    # Boot to fastboot
    fastboot reboot bootloader
-   
+
    # Re-flash
    fastboot flash recovery recovery.img
    fastboot reboot recovery
@@ -619,11 +619,11 @@ ls -la */boot.emmc.win*
 2. **Disable Encryption** (Last Resort - WIPES DATA!)
    ```
    WARNING: This erases everything!
-   
+
    Main Menu > Wipe > Format Data
    Type: yes
    Swipe to format
-   
+
    This removes encryption
    ```
 
@@ -893,9 +893,9 @@ If you encounter issues:
 
 ---
 
-**Guide Version**: 1.0  
-**Last Updated**: 2026-02-10  
-**Device**: Poco X4 Pro 5G (veux/peux)  
-**Recovery**: OrangeFox R11.1+  
+**Guide Version**: 1.0
+**Last Updated**: 2026-02-10
+**Device**: Poco X4 Pro 5G (veux/peux)
+**Recovery**: OrangeFox R11.1+
 
 **Status**: ✅ Production Ready

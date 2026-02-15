@@ -11,18 +11,18 @@ Querty-OS tri-boot provides **TRUE NATIVE execution** of multiple operating syst
 ### What We DON'T Use
 
 ❌ **proot** - Fake root environment in Android
-❌ **chroot** - Container within Android  
+❌ **chroot** - Container within Android
 ❌ **Termux proot-distro** - Linux in Android userspace
 ❌ **UserLAnd** - Containerized Linux
 ❌ **AnLinux** - proot-based solution
 
 ### What We DO Use
 
-✅ **Dedicated Linux Partition** - Separate filesystem  
-✅ **Native Linux Kernel** - Real Linux kernel boots directly  
-✅ **Direct Hardware Access** - Full device control  
-✅ **Independent Boot** - Completely separate from Android  
-✅ **Full System Privileges** - Real root, not fake root  
+✅ **Dedicated Linux Partition** - Separate filesystem
+✅ **Native Linux Kernel** - Real Linux kernel boots directly
+✅ **Direct Hardware Access** - Full device control
+✅ **Independent Boot** - Completely separate from Android
+✅ **Full System Privileges** - Real root, not fake root
 
 ### Technical Implementation
 
@@ -142,7 +142,7 @@ Features:
   ✓ Pixel-like experience
   ✓ Regular security updates
   ✓ Customization options
-  
+
 Tri-boot Compatibility: ✅ Full Support
 Installation: Standard ROM flash via TWRP
 Boot Image: Extract from ROM zip
@@ -157,7 +157,7 @@ Features:
   ✓ Verified boot support
   ✓ Sandboxed Google Play
   ✓ Enhanced privacy
-  
+
 Tri-boot Compatibility: ⚠️ Check device support
 Note: GrapheneOS officially supports limited devices
       Poco X4 Pro may need unofficial port
@@ -203,10 +203,10 @@ Android's boot.img contains:
 
 ### What We DO Use
 
-✅ **Windows ARM64** - Native ARM version of Windows  
-✅ **UEFI Boot** - Standard PC boot method  
-✅ **Direct Hardware** - Real hardware access  
-✅ **ARM64 Native Apps** - No emulation needed  
+✅ **Windows ARM64** - Native ARM version of Windows
+✅ **UEFI Boot** - Standard PC boot method
+✅ **Direct Hardware** - Real hardware access
+✅ **ARM64 Native Apps** - No emulation needed
 
 ### Technical Implementation
 

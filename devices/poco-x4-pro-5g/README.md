@@ -48,8 +48,8 @@ Using **OrangeFox Recovery** (recommended) or TWRP as the OS selector.
   - Complete hardware access
   - Real root privileges
   - 100% native performance
-  
-- ✅ **Windows apps run NATIVELY** - NOT via Wine/emulation  
+
+- ✅ **Windows apps run NATIVELY** - NOT via Wine/emulation
   - Real Windows 11 ARM64 OS
   - ARM64 apps run at full speed
   - Windows handles x64 emulation internally
@@ -288,7 +288,7 @@ See the main [Querty-OS documentation](../../README.md) for more details.
   - Requires UEFI port for Snapdragon 695
   - Run Windows apps natively via ARM64
   - Currently experimental on SD695
-- **Linux**: 
+- **Linux**:
   - **Native Linux boot** (NOT proot/chroot from Android)
   - Dedicated Linux partition with full kernel
   - postmarketOS (when available)

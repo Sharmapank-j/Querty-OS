@@ -366,7 +366,7 @@ adb reboot recovery
    1. Tap "Settings"
    2. Find "Enable ADB"
    3. Swipe to enable
-   
+
    Verify from PC:
    adb devices
    # Should show device in recovery mode
@@ -377,7 +377,7 @@ adb reboot recovery
    - Swipe from bottom: Terminal
    - Main menu: Backup, Install, Wipe, etc.
 
-**📖 For complete OrangeFox guide with all features, see:**  
+**📖 For complete OrangeFox guide with all features, see:**
 [OrangeFox Recovery Complete Guide](devices/poco-x4-pro-5g/docs/ORANGEFOX-RECOVERY.md)
 
 ### 4.5 Alternative: TWRP (If OrangeFox Issues)
@@ -451,7 +451,7 @@ OrangeFox Menu:
 3. Optional (large, but recommended):
    ✅ System_ext
    ✅ Product
-   
+
 4. Name: full-backup-stock-YYYYMMDD
 5. Enable compression (saves space)
 6. Select storage: Internal or SD card

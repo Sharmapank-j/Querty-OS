@@ -5,6 +5,7 @@ Demonstrates a sensor plugin that monitors system resources.
 """
 
 import psutil
+
 from core.plugin_system import Plugin, PluginType
 
 

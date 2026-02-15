@@ -18,10 +18,10 @@ log "======================================"
 if [ -f "$DAEMON_PID_FILE" ]; then
     DAEMON_PID=$(cat "$DAEMON_PID_FILE")
     log "Stopping AI Daemon (PID: $DAEMON_PID)..."
-    
+
     # Send TERM signal for graceful shutdown
     kill -TERM "$DAEMON_PID" 2>/dev/null
-    
+
     # Wait for daemon to stop (max 10 seconds)
     for i in 1 2 3 4 5 6 7 8 9 10; do
         if ! kill -0 "$DAEMON_PID" 2>/dev/null; then
@@ -31,7 +31,7 @@ if [ -f "$DAEMON_PID_FILE" ]; then
         fi
         sleep 1
     done
-    
+
     # Force kill if still running
     if kill -0 "$DAEMON_PID" 2>/dev/null; then
         log "WARNING: Force killing daemon"

@@ -62,7 +62,7 @@ if [ -f "$AVD_CONFIG" ]; then
     sed -i 's/^hw.ramSize=.*/hw.ramSize=8192/' "$AVD_CONFIG"
     sed -i 's/^disk.dataPartition.size=.*/disk.dataPartition.size=8G/' "$AVD_CONFIG"
     sed -i 's/^hw.keyboard=.*/hw.keyboard=yes/' "$AVD_CONFIG"
-    
+
     # Add lines if they don't exist
     grep -q "^hw.cpu.ncore=" "$AVD_CONFIG" || echo "hw.cpu.ncore=4" >> "$AVD_CONFIG"
     grep -q "^hw.gpu.enabled=" "$AVD_CONFIG" || echo "hw.gpu.enabled=yes" >> "$AVD_CONFIG"
