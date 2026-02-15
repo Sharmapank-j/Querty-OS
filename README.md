@@ -1,5 +1,12 @@
 # Querty-OS
 
+[![Python application](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/python-app.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/python-app.yml)
+[![Makefile CI](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/makefile.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/makefile.yml)
+[![Docker Image CI](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/docker-image.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 **AI-First System Layer for Android**
 
 Querty-OS is an Android-based AI-first system layer (not a ROM) where a local administrator AI serves as the primary interface. It enables voice/text/camera control, automation, multi-OS workflows (Android, Linux, Windows apps), safe updates, and rollback — strictly on user command.
@@ -8,9 +15,9 @@ Querty-OS is an Android-based AI-first system layer (not a ROM) where a local ad
 
 - **[Quick Start Guide](QUICKSTART.md)** - Get started in 5 minutes
 - **[Sandbox Setup](SANDBOX_SETUP.md)** - Test in virtual environments (Docker, QEMU, Android Emulator)
-- **[Device Deployment](POCO_X4_PRO_DEPLOYMENT.md)** - Install on Poco X4 Pro 5G
+- **[Device Deployment](docs/POCO_X4_PRO_DEPLOYMENT.md)** - Install on Poco X4 Pro 5G
 - **[Quick Reference](SETUP_QUICK_REFERENCE.md)** - All commands in one place
-- **[Architecture](ARCHITECTURE_VERIFICATION.md)** - System design and verification
+- **[Architecture](docs/ARCHITECTURE_VERIFICATION.md)** - System design and verification
 - **[Contributing](CONTRIBUTING.md)** - Development guidelines
 
 ## Overview
@@ -73,7 +80,7 @@ See **[SANDBOX_SETUP.md](SANDBOX_SETUP.md)** for complete virtualization guide.
 
 ⚠️ **Only after successful sandbox testing!**
 
-Complete step-by-step guide: **[POCO_X4_PRO_DEPLOYMENT.md](POCO_X4_PRO_DEPLOYMENT.md)**
+Complete step-by-step guide: **[docs/POCO_X4_PRO_DEPLOYMENT.md](docs/POCO_X4_PRO_DEPLOYMENT.md)**
 
 Quick overview:
 1. Unlock bootloader (⚠️ erases all data)
@@ -168,7 +175,7 @@ Run the host-side verifier to confirm files, tools, and device state before flas
 bash devices/poco-x4-pro-5g/scripts/fresh_mirom_setup.sh
 ```
 
-Then continue with the full deployment playbook in [POCO_X4_PRO_DEPLOYMENT.md](POCO_X4_PRO_DEPLOYMENT.md).
+Then continue with the full deployment playbook in [docs/POCO_X4_PRO_DEPLOYMENT.md](docs/POCO_X4_PRO_DEPLOYMENT.md).
 
 ## Usage
 
@@ -178,20 +185,6 @@ Use the interactive dashboard and daemon entrypoint:
 python3 scripts/dashboard.py
 querty-daemon
 ```
-
-## Development
-
-### Prerequisites
-- Android device with root access
-- Android SDK
-- Python 3.8+
-- Required system permissions
-
-### Building from Source
-*Build instructions will be added as the system is developed.*
-
-### Contributing
-Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
 
 ## Security & Privacy
 
@@ -217,24 +210,6 @@ Querty-OS enforces a strict resource allocation priority:
 - **Windows (Lowest)**: 10% allocation - Wine prefix and applications
 
 See `docs/ERROR_HANDLING.md` for comprehensive priority system documentation.
-
-## Quick Start
-
-```bash
-# Install dependencies
-make install-dev
-
-# View system status
-python3 scripts/dashboard.py
-
-# Run tests
-make test
-
-# Format code
-make format
-```
-
-See [QUICKSTART.md](QUICKSTART.md) for detailed getting started guide.
 
 ## Development
 
@@ -274,6 +249,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for development guidelines.
 - [x] Custom exception hierarchy
 - [x] Testing infrastructure (pytest, 23+ tests)
 - [x] CI/CD pipeline (GitHub Actions)
+- [x] CI/CD workflows (Python, Makefile, Docker, CodeQL)
 - [x] Development tools (Makefile, dashboard, validation)
 - [x] Comprehensive documentation (5 guides)
 - [x] Code quality tools (black, isort, flake8, mypy, bandit)
