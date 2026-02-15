@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger("querty-ota-manager")
 
@@ -41,7 +41,7 @@ class UpdatePackage:
     incremental: bool = False
     base_version: Optional[str] = None
     changelog: str = ""
-    metadata: Dict = None
+    metadata: Optional[Dict[str, Any]] = None
 
     def __post_init__(self):
         if self.metadata is None:
@@ -83,7 +83,7 @@ class OTAManager:
             try:
                 with open(version_file, "r") as f:
                     data = json.load(f)
-                    return data.get("version", "0.1.0")
+                    return str(data.get("version", "0.1.0"))
             except Exception as e:
                 logger.error(f"Error loading version: {e}")
         return "0.1.0"
@@ -309,14 +309,14 @@ class OTAManager:
             logger.error(f"Error during rollback: {e}")
             return False
 
-    def get_update_history(self) -> List[Dict]:
+    def get_update_history(self) -> List[Dict[str, Any]]:
         """
         Get update history.
 
         Returns:
             List of update records
         """
-        history = []
+        history: List[Dict[str, Any]] = []
         metadata_dir = self.storage_path / "metadata"
 
         if not metadata_dir.exists():

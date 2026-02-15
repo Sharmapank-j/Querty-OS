@@ -3,11 +3,18 @@ Querty-OS Custom Exceptions
 Provides structured error handling across all modules.
 """
 
+from typing import Any, Dict, Optional
+
 
 class QuertyOSError(Exception):
     """Base exception for all Querty-OS errors."""
 
-    def __init__(self, message: str, error_code: str = None, details: dict = None):
+    def __init__(
+        self,
+        message: str,
+        error_code: Optional[str] = None,
+        details: Optional[Dict[str, Any]] = None,
+    ):
         """
         Initialize QuertyOS exception.
 

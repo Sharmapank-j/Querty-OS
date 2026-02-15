@@ -11,7 +11,7 @@ from dataclasses import dataclass
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set
+from typing import Any, Dict, List, Optional, Set, Tuple
 
 logger = logging.getLogger("querty-security-layer")
 
@@ -93,7 +93,7 @@ class PromptFirewall:
             "injection",
         }
 
-    def check_prompt(self, prompt: str) -> tuple[bool, Optional[str]]:
+    def check_prompt(self, prompt: str) -> Tuple[bool, Optional[str]]:
         """
         Check if prompt is safe.
 

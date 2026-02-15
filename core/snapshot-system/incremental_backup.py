@@ -90,7 +90,7 @@ class IncrementalBackup:
         Returns:
             Hex digest of checksum
         """
-        md5 = hashlib.md5()
+        md5 = hashlib.md5(usedforsecurity=False)  # nosec B324 - used for file checksums, not crypto
         with open(file_path, "rb") as f:
             while True:
                 chunk = f.read(8192 * 16)  # 128KB chunks

@@ -31,7 +31,7 @@ class Plugin(ABC):
         self.version = version
         self.plugin_type = plugin_type
         self.enabled = False
-        self.metadata = {}
+        self.metadata: Dict[str, Any] = {}
 
     @abstractmethod
     def initialize(self) -> bool:
@@ -48,7 +48,7 @@ class Plugin(ABC):
         """Shutdown and cleanup plugin."""
         pass
 
-    def get_info(self) -> Dict:
+    def get_info(self) -> Dict[str, Any]:
         """Get plugin information."""
         return {
             "name": self.name,
@@ -83,8 +83,8 @@ class PluginManager:
             plugin_dir: Directory containing plugins
         """
         self.plugin_dir = Path(plugin_dir)
-        self.plugins = {}
-        self.loaded_plugins = {}
+        self.plugins: Dict[str, Any] = {}
+        self.loaded_plugins: Dict[str, Any] = {}
         logger.info("Plugin Manager initialized")
 
     def discover_plugins(self) -> List[str]:
@@ -94,7 +94,7 @@ class PluginManager:
         Returns:
             List of plugin names
         """
-        plugins = []
+        plugins: List[str] = []
         if not self.plugin_dir.exists():
             logger.warning(f"Plugin directory not found: {self.plugin_dir}")
             return plugins
@@ -219,7 +219,7 @@ class PluginManager:
             ]
         return list(self.loaded_plugins.keys())
 
-    def get_plugin_info(self, plugin_name: str) -> Optional[Dict]:
+    def get_plugin_info(self, plugin_name: str) -> Optional[Dict[str, Any]]:
         """
         Get plugin information.
 
@@ -231,4 +231,5 @@ class PluginManager:
         """
         if plugin_name not in self.loaded_plugins:
             return None
-        return self.loaded_plugins[plugin_name].get_info()
+        info: Dict[str, Any] = self.loaded_plugins[plugin_name].get_info()
+        return info
