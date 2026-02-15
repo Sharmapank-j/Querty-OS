@@ -6,6 +6,7 @@ Facilitates data exchange between Android, Linux, and host systems.
 import hashlib
 import logging
 import shutil
+import sys
 from dataclasses import dataclass
 from enum import Enum
 from pathlib import Path
@@ -171,8 +172,9 @@ class AppBridge:
 
     def _generate_job_id(self, source: str, destination: str) -> str:
         """Generate unique job ID."""
-        data = f"{source}:{destination}:{len(self.transfer_jobs)}"
-        return hashlib.md5(data.encode()).hexdigest()[:16]
+        import uuid
+
+        return uuid.uuid4().hex[:16]
 
     def _resolve_path(self, endpoint_name: str, path: str) -> Path:
         """
@@ -279,6 +281,13 @@ class AppBridge:
             logger.info(f"Transfer completed: {job_id}")
             return job
 
+        except OSControlError:
+            # Re-raise OSControlError unchanged to preserve error_code and details
+            job.status = TransferStatus.FAILED
+            job.error = str(sys.exc_info()[1])
+            self._notify_progress(job_id, job)
+            logger.error(f"Transfer failed: {sys.exc_info()[1]}")
+            raise
         except Exception as e:
             job.status = TransferStatus.FAILED
             job.error = str(e)

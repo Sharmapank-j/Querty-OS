@@ -8,7 +8,7 @@ import logging
 from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 logger = logging.getLogger(__name__)
 
@@ -263,7 +263,7 @@ class ModelLoader:
 
     def __init__(self):
         """Initialize the model loader."""
-        self.plugins: list[ModelLoaderPlugin] = [
+        self.plugins: List[ModelLoaderPlugin] = [
             GGUFModelLoader(),
             ONNXModelLoader(),
             TFLiteModelLoader(),

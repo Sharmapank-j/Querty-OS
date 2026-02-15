@@ -33,6 +33,7 @@ class Service:
         start_func: Callable,
         stop_func: Callable,
         health_check_func: Optional[Callable] = None,
+        priority: int = 0,
     ):
         """
         Initialize a service.
@@ -42,11 +43,13 @@ class Service:
             start_func: Function to start the service
             stop_func: Function to stop the service
             health_check_func: Optional function to check service health
+            priority: Service priority (higher values start first)
         """
         self.name = name
         self.start_func = start_func
         self.stop_func = stop_func
         self.health_check_func = health_check_func
+        self.priority = priority
         self.state = ServiceState.STOPPED
         self.start_time: Optional[datetime] = None
         self.last_health_check: Optional[datetime] = None
@@ -98,15 +101,16 @@ class ServiceManager:
         if name in self.services:
             logger.warning(f"Service {name} already registered, updating")
 
-        service = Service(name, start_func, stop_func, health_check_func)
+        service = Service(name, start_func, stop_func, health_check_func, priority)
         self.services[name] = service
 
         # Insert service in start order based on priority
         if name not in self.start_order:
             self.start_order.append(name)
-            # Sort by priority (would need to store priority, but keeping simple for now)
+            # Sort by priority (higher priority first)
+            self.start_order.sort(key=lambda n: self.services[n].priority, reverse=True)
 
-        logger.info(f"Registered service: {name}")
+        logger.info(f"Registered service: {name} with priority {priority}")
 
     def start_service(self, name: str) -> bool:
         """

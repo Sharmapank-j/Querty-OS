@@ -296,6 +296,9 @@ class Tokenizer:
         Returns:
             Decoded text or list of texts
         """
+        if not token_ids:
+            return "" if skip_special_tokens else []
+
         if isinstance(token_ids[0], int):
             # Single sequence
             return self.backend.decode(token_ids)

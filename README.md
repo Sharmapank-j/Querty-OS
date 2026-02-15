@@ -3,7 +3,7 @@
 [![Python application](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/python-app.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/python-app.yml)
 [![Makefile CI](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/makefile.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/makefile.yml)
 [![Docker Image CI](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Sharmapank-j/Querty-OS/actions/workflows/docker-image.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
