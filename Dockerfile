@@ -28,8 +28,8 @@ RUN apt-get update && apt-get install -y \
     make \
     cmake \
     # Python and development
-    python3.11 \
-    python3.11-dev \
+    python3.12 \
+    python3.12-dev \
     python3-pip \
     python3-venv \
     # System tools
@@ -50,8 +50,7 @@ RUN apt-get update && apt-get install -y \
     debootstrap \
     schroot \
     # Wine dependencies (for Windows app support)
-    wine64 \
-    libwine \
+    wine \
     winetricks \
     # Cleanup
     && apt-get clean \
