@@ -28,8 +28,8 @@ RUN apt-get update && apt-get install -y \
     make \
     cmake \
     # Python and development
-    python3.11 \
-    python3.11-dev \
+    python3.12 \
+    python3.12-dev \
     python3-pip \
     python3-venv \
     # System tools
@@ -50,8 +50,7 @@ RUN apt-get update && apt-get install -y \
     debootstrap \
     schroot \
     # Wine dependencies (for Windows app support)
-    wine64 \
-    libwine \
+    wine \
     winetricks \
     # Cleanup
     && apt-get clean \
@@ -68,9 +67,9 @@ WORKDIR ${QUERTY_HOME}
 COPY . ${QUERTY_HOME}/
 
 # Install Python dependencies
-RUN pip3 install --upgrade pip setuptools wheel && \
-    pip3 install -r requirements.txt && \
-    pip3 install -e .
+RUN pip3 install --break-system-packages --ignore-installed --upgrade pip setuptools wheel && \
+    pip3 install --break-system-packages -r requirements.txt && \
+    pip3 install --break-system-packages -e .
 
 # Create necessary directories and set permissions
 RUN mkdir -p /var/log && \
@@ -78,7 +77,7 @@ RUN mkdir -p /var/log && \
     chmod 666 /var/log/querty-ai-daemon.log
 
 # Create non-root user for running the application
-RUN useradd -m -u 1000 -s /bin/bash querty && \
+RUN useradd -m -u 1001 -s /bin/bash querty && \
     chown -R querty:querty ${QUERTY_HOME} ${QUERTY_DATA} /var/log/querty-ai-daemon.log
 
 # Switch to non-root user
