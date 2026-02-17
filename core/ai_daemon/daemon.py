@@ -103,6 +103,7 @@ class QuertyAIDaemon:
         self.security_layer = None
         self.cli_api = None
         self.ota_manager = None
+        self.performance_optimizer = None
 
         # Health monitoring
         self.watchdog = DaemonWatchdog()
@@ -277,6 +278,19 @@ class QuertyAIDaemon:
                 logger.warning(f"  - Snapshot system: failed to initialize ({e})")
                 self.health_status["services"]["snapshot"] = "degraded"
 
+            # Initialize performance optimizer
+            logger.info("  - Performance optimizer: initializing")
+            self.health_status["services"]["performance"] = "initializing"
+            try:
+                from core.performance import PerformanceOptimizer
+
+                self.performance_optimizer = PerformanceOptimizer()
+                self.health_status["services"]["performance"] = "ready"
+                logger.info("  - Performance optimizer: ready")
+            except Exception as e:
+                logger.warning(f"  - Performance optimizer: failed to initialize ({e})")
+                self.health_status["services"]["performance"] = "degraded"
+
             logger.info("All services initialized")
             self.health_status["status"] = "running"
 
@@ -317,6 +331,8 @@ class QuertyAIDaemon:
         """Main daemon event loop with heartbeat."""
         logger.info("Entering main event loop")
 
+        performance_check_counter = 0
+
         while self.running:
             # Send heartbeat to watchdog
             self.watchdog.heartbeat()
@@ -332,6 +348,14 @@ class QuertyAIDaemon:
                 # Process any pending agent tasks
                 if self.agent_automation:
                     self._process_agent_tasks()
+
+                # Performance monitoring (every 60 seconds)
+                performance_check_counter += 1
+                if performance_check_counter >= 60 and self.performance_optimizer:
+                    result = self.performance_optimizer.analyze_and_optimize()
+                    if result["optimizations"]:
+                        logger.info(f"Performance optimizations applied: {result['optimizations']}")
+                    performance_check_counter = 0
 
             except Exception as e:
                 logger.error(f"Error in main loop: {e}", exc_info=True)
