@@ -28,8 +28,8 @@ RUN apt-get update && apt-get install -y \
     make \
     cmake \
     # Python and development
-    python3.11 \
-    python3.11-dev \
+    python3 \
+    python3-dev \
     python3-pip \
     python3-venv \
     # System tools
