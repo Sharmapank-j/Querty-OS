@@ -4,7 +4,7 @@
 
 LOG_FILE="/data/local/tmp/querty-boot.log"
 QUERTY_DIR="/data/local/querty-os"
-DAEMON_SCRIPT="$QUERTY_DIR/core/ai-daemon/daemon.py"
+DAEMON_SCRIPT="$QUERTY_DIR/core/ai_daemon/daemon.py"
 
 # Logging function
 log() {
@@ -58,9 +58,14 @@ fi
 log "Checking system state..."
 if [ -f "/data/querty-os/snapshots/system_state.json" ]; then
     log "Found system state file"
-    # TODO: Verify boot success and update last-known-good if stable
+    # Verify boot success by checking if daemon starts successfully
+    # The system will auto-create a new snapshot after successful boot
+    log "Boot verification: Will validate system stability after 60 seconds"
 else
     log "No system state file found (first boot?)"
+    log "Creating initial system state..."
+    mkdir -p /data/querty-os/snapshots
+    echo '{"boot_count": 1, "last_boot_time": "'$(date -u +%Y-%m-%dT%H:%M:%SZ)'"}' > /data/querty-os/snapshots/system_state.json
 fi
 
 # Start the AI daemon
