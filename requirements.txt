@@ -14,7 +14,7 @@ structlog>=23.1.0
 
 # Configuration Management
 pyyaml>=6.0
-python-dotenv>=1.0.0
+python-dotenv>=1.2.1
 
 # CLI Interface
 click>=8.1.0
