@@ -41,7 +41,7 @@ codecov>=2.1.13
 
 # Build and packaging
 build>=0.10.0
-twine>=4.0.0
+twine>=6.2.0
 setuptools>=68.0.0
 wheel>=0.40.0
 
