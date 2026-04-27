@@ -6,7 +6,7 @@
 
 # System and Process Management
 psutil>=5.9.0
-watchdog>=3.0.0
+watchdog>=6.0.0
 
 # Logging and Monitoring
 coloredlogs>=15.0
