@@ -32,4 +32,4 @@ aiofiles>=23.1.0
 # pyjnius>=1.4.0  # For Android Java integration
 
 # System utilities
-python-dateutil>=2.8.0
+python-dateutil>=2.9.0.post0
