@@ -18,7 +18,7 @@ flake8>=6.1.0  # Linting
 pylint>=2.17.0  # Advanced linting
 mypy>=1.4.0  # Type checking
 bandit>=1.7.5  # Security scanning
-safety>=2.3.0  # Dependency security checking
+safety>=3.7.0  # Dependency security checking
 
 # Documentation
 sphinx>=7.0.0
